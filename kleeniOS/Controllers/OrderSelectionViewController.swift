@@ -494,6 +494,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
     }
     
+    
     func setupDetergentSelectionViewConstraints() {
         detergentSelectionView?.translatesAutoresizingMaskIntoConstraints = false
         detergentSelectionView?.topAnchor.constraint(equalTo: self.contentView!.topAnchor, constant: 0).isActive = true
@@ -721,6 +722,8 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
 
     }
     
+    
+    //This method retrieves orders from the data store and refreshes the UIComponents to match the options from a previous order
     func restorePreviousOrder(orderMO: OrderModelMO) {
         
         
