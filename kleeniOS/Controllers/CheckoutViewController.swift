@@ -10,16 +10,11 @@ import Foundation
 import UIKit
 
 class CheckoutViewController: UIViewController, SelectionDelegate {
-    func onSelectDate(sender: UIView) {
-        print("nothing")
-    }
-    
 
     
     private var laundry: Laundry?
     var checkoutView: CheckoutView?
     var summaryView: SummaryView?
-    
     
     var order : Order? {
         didSet {
@@ -238,6 +233,16 @@ class CheckoutViewController: UIViewController, SelectionDelegate {
     func didSelectOption(sender: UIView) {
         print("")
     }
+    
+    func onSelectDate(sender: UIView) {
+        print("nothing")
+    }
+    
+    
+    func onCheckout(sender: UIView) {
+        print("Oink")
+    }
+    
     
     
 }

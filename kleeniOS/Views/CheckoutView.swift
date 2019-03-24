@@ -11,7 +11,7 @@ import UIKit
 
 class CheckoutView: UIView {
     
-    private var checkoutTitleLabel : UILabel?
+    var checkoutTitleLabel : UILabel?
     private var detergentTypeLabel: UILabel?
     private var detergentTitleLabel: UILabel?
     private var basketTypeLabel: UILabel?

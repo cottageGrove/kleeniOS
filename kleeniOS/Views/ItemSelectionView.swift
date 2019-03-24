@@ -24,6 +24,9 @@ protocol SelectionDelegate {
     
     //Did select the additional option radio button
     func didSelectOption(sender: UIView)
+    
+    //Selected the checkout button in the footer view
+    func onCheckout(sender: UIView)
 }
 
 class ItemSelectionView: UIView {

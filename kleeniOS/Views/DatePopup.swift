@@ -118,7 +118,7 @@ class DatePopup: UIView {
         pickupLabel?.heightAnchor.constraint(equalToConstant: 50).isActive = true
         pickupLabel?.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
 //        pickupLabel?.rightAnchor.constraint(equalTo: self.upperButton!.leftAnchor, constant: 0).isActive = true
-        pickupLabel?.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        pickupLabel?.topAnchor.constraint(equalTo: self.topAnchor, constant: 12).isActive = true
         
         dropoffHeaderLabel?.translatesAutoresizingMaskIntoConstraints = false
         dropoffHeaderLabel?.widthAnchor.constraint(equalToConstant: 200).isActive = true
@@ -131,7 +131,7 @@ class DatePopup: UIView {
         dropoffLabel?.heightAnchor.constraint(equalToConstant: 50).isActive = true
         dropoffLabel?.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
 //        dropoffLabel?.rightAnchor.constraint(equalTo: self.lowerButton!.leftAnchor, constant: 0).isActive = true
-        dropoffLabel?.topAnchor.constraint(equalTo: self.upperButton!.bottomAnchor, constant: 30).isActive = true
+        dropoffLabel?.topAnchor.constraint(equalTo: self.upperButton!.bottomAnchor, constant: 32).isActive = true
         
         
     }

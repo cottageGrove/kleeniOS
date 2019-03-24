@@ -23,6 +23,7 @@ enum Days: String, CaseIterable {
 
 class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrollViewDelegate {
 
+
     
 
     //Initializing UIViews that make up the majority of this Controller
@@ -40,12 +41,16 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
     var contentView: UIView?
     var checkoutView: CheckoutView?
     var datePopupView: DatePopup?
+    var backgroundView : UIView?
+    
+    var footerView: FooterView?
     
 
     //Constraints for autolayout manipulation
-    var bottomBarButtomItemConstraint: NSLayoutConstraint?
     var checkoutBarButtonItem: UIBarButtonItem?
+    var footerViewHeightConstraint: NSLayoutConstraint?
     var imageView : UIImageView?
+    
     
     //Enum selected for the day of the week
     var day = Days.monday
@@ -85,6 +90,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         basketSelectionView?.delegate = self
         checkoutView?.delegate = self
         datePopupView?.delegate = self
+        footerView?.delegate = self
         
         //might have to clean this up
         toggleView?.foldRadioView?.delegate = self
@@ -100,21 +106,44 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard let navBar = self.navigationController?.navigationBar else {return}
 
-        self.checkoutView?.updateConstraints()
-//        print("Content Offset: \(scrollView.contentOffset.y)")
+//        self.checkoutView?.updateConstraints()
+        print("Content Offset: \(scrollView.contentOffset.y)")
+        
+        //Approaching the bottom of the scrollView
         if scrollView.contentOffset.y > 350 {
+//            self.view.layoutSubviews()
+
             checkoutViewHeightConstraint?.constant = 205
+            footerViewHeightConstraint?.constant = 120
+            footerView?.transformButton(constant: -30)
+            self.view.setNeedsLayout()
+            
             
             UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [.curveEaseIn, .allowUserInteraction], animations: {
-                self.view.layoutSubviews()
+                
+
+//                self.view.layoutSubviews()
+//                self.scrollView?.layoutIfNeeded()
+                self.view.layoutIfNeeded()
+                
+                
+                
             }, completion: nil)
+            
+
             
         } else {
             
+            self.view.layoutSubviews()
+            
             checkoutViewHeightConstraint?.constant = 100
+            footerViewHeightConstraint?.constant = 100
+            footerView?.transformButton(constant: 30)
             
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [.curveEaseIn, .allowUserInteraction], animations: {
                 self.view.layoutSubviews()
+//                self.scrollView?.layoutIfNeeded()
+                self.view.layoutIfNeeded()
             }, completion: nil)
             
         }
@@ -226,8 +255,6 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         button.heightAnchor.constraint(equalToConstant: 96).isActive = true
 
 
-
-
         button.addTarget(self, action: #selector(showClick), for: .touchUpInside)
         button.backgroundColor = .yellow
         checkoutBarButtonItem = UIBarButtonItem(customView: button)
@@ -322,7 +349,8 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         detergentSelectionView = ItemSelectionView()
         basketSelectionView = BasketSelectionView()
         toggleView = ToggleView()
-        checkoutButton = KleenerButton()
+//        checkoutButton = KleenerButton()
+        footerView = FooterView()
         
         
         let rect = CGRect(x: 0, y: 0, width: 50, height: 50)
@@ -344,7 +372,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         self.contentView?.addSubview(basketSelectionView!)
         self.contentView?.addSubview(toggleView!)
         self.contentView?.addSubview(datePopupView!)
-        self.contentView?.addSubview(checkoutButton!)
+        self.contentView?.addSubview(footerView!)
 //        self.view.addSubview(detergentSelectionView!)
 //        self.view.addSubview(basketSelectionView!)
         
@@ -355,51 +383,36 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         setupBasketSelectionViewConstraints()
         setupToggleViewConstraint()
         setupCalendarPopupView()
-        setupCheckoutButton()
+        setupFooterView()
         
     }
     
-    func setupCheckoutButton() {
-//        let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
+    func setupFooterView() {
+        let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
 //        checkoutButton = KleenerButton(frame: rect)
-//
+        
+        
+        self.footerView?.translatesAutoresizingMaskIntoConstraints = false
+        footerView?.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
+        
+        footerViewHeightConstraint = NSLayoutConstraint(item: footerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 80)
+        
+        self.view.addConstraint(footerViewHeightConstraint!)
+        
+        footerView?.bottomAnchor.constraint(equalTo: self.contentView!.bottomAnchor, constant: 0).isActive = true
+        
+
         checkoutButton?.setButtonText(titleText: "Checkout")
         checkoutButton?.setShadow()
 //        checkoutButton?.dropdownButtonSetup()
         checkoutButton?.checkoutButtonSetup()
         
-        checkoutButton?.setCornerRadius(radius: 20)
-        
-        self.scrollView?.addSubview(checkoutButton!)
-        checkoutButton?.translatesAutoresizingMaskIntoConstraints = false
-        checkoutButton?.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        checkoutButton?.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        checkoutButton?.centerXAnchor.constraint(equalTo: scrollView!.centerXAnchor, constant: 0).isActive = true
-        checkoutButton?.bottomAnchor.constraint(equalTo: self.scrollView!.bottomAnchor, constant: -60).isActive = true
-        
-        checkoutButton?.addTarget(self, action: #selector(onCheckout(sender:)), for: .touchUpInside)
-    }
-    
-    @objc func onCheckout(sender checkoutButton: KleenerButton) {
-        
-        checkoutButton.enlarge()
-        
-        //TODO - must uncomment to save order to local filesystem
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = appDelegate.persistentContainer.viewContext
-        let kleenPersistor = KleenPersistor(moc: managedObjectContext)
-        kleenPersistor.storeOrder(order: order!, laundry: self.laundry!)
-        
 
+//        backgroundView.layoutIfNeeded()
         
+//        checkoutButton?.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -30).isActive = true
         
-        
-//        updateCheckout()
     }
-    
-
-    
     
     func updateCheckout() {
         
@@ -420,6 +433,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
         
     }
+    
     func setupScrollView() {
 
         
@@ -656,6 +670,19 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
 
     }
     
+    func onCheckout(sender: UIView) {
+        print("Pressed the checkout button")
+        
+        let checkoutBtn = sender as? KleenerButton
+        checkoutBtn?.enlarge()
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        let kleenPersistor = KleenPersistor(moc: managedObjectContext)
+        kleenPersistor.storeOrder(order: order!, laundry: self.laundry!)
+    }
+    
+    
     
     
     
@@ -710,13 +737,15 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
 
 
         let controller2 = OrdersViewController(orders: orders) { (previousOrder) in
+            
             print("going into previous order")
             let order = previousOrder
             print("order selected \(order)")
             self.restorePreviousOrder(orderMO: order)
         }
+        
 
-        controller2.preferredContentSize = CGSize(width: 360, height: 250)
+        controller2.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: 250)
 
 //        controller2.preferredContentSize = CGSize(width: 400, height: 300)
         let popoverDirection = UIPopoverArrowDirection(arrayLiteral: .up)

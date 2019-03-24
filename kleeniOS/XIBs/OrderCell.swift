@@ -51,7 +51,8 @@ class OrderCell: UITableViewCell {
 
         // Initialization code
 //         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.tapHeader(_:))))
-        statusLabel.textAlignment = .right
+
+        statusLabel.textColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
 
     }
     

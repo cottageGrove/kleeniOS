@@ -43,9 +43,10 @@ class KleenerButton: UIButton {
     func setShadow() {
         //Add shadow layer to the button
         self.layer.shadowRadius = 3.0
-        self.layer.shadowColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        self.layer.shadowColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
         self.layer.shadowOffset = CGSize(width: 0, height: 3)
-        self.layer.shadowOpacity = 0.02
+//        self.layer.shadowOpacity = 0.02
+        self.layer.shadowOpacity = 0.04
         self.layer.masksToBounds = false
 
     }
