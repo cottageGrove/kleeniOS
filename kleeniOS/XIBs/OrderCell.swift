@@ -34,6 +34,7 @@ class OrderCell: UITableViewCell {
             datePlacedLabel.text = orderModelMO.datePlaced
             deliveryDateLabel.text = orderModelMO.dropoffDate
             statusLabel.text = "Pending"
+            
         }
     }
     
@@ -50,6 +51,7 @@ class OrderCell: UITableViewCell {
 
         // Initialization code
 //         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.tapHeader(_:))))
+        statusLabel.textAlignment = .right
 
     }
     

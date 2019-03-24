@@ -368,10 +368,12 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
 //        checkoutButton?.dropdownButtonSetup()
         checkoutButton?.checkoutButtonSetup()
         
+        checkoutButton?.setCornerRadius(radius: 20)
+        
         self.scrollView?.addSubview(checkoutButton!)
         checkoutButton?.translatesAutoresizingMaskIntoConstraints = false
-        checkoutButton?.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        checkoutButton?.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        checkoutButton?.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        checkoutButton?.heightAnchor.constraint(equalToConstant: 40).isActive = true
         checkoutButton?.centerXAnchor.constraint(equalTo: scrollView!.centerXAnchor, constant: 0).isActive = true
         checkoutButton?.bottomAnchor.constraint(equalTo: self.scrollView!.bottomAnchor, constant: -60).isActive = true
         

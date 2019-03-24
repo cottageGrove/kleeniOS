@@ -16,7 +16,6 @@ class KleenerButton: UIButton {
 
         layer.borderWidth = 0.3
         layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        
 
         
     }
@@ -35,6 +34,10 @@ class KleenerButton: UIButton {
         self.titleLabel?.font =  UIFont(name: "San Francisco", size: 16)
 
         
+    }
+    
+    func setCornerRadius(radius: CGFloat) {
+        self.layer.cornerRadius = radius
     }
     
     func setShadow() {

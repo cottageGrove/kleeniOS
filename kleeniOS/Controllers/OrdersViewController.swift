@@ -108,6 +108,8 @@ class OrdersViewController: UITableViewController {
         
         //Creating a cell view for each OrderModel
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! OrderCell
+        
+        cell.accessoryType = .disclosureIndicator
         let order = orders[indexPath.row]
 
         cell.datePlacedLabel.text = order.datePlaced
