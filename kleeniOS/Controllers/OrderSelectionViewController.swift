@@ -114,8 +114,8 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
 //            self.view.layoutSubviews()
 
             checkoutViewHeightConstraint?.constant = 205
-            footerViewHeightConstraint?.constant = 120
-            footerView?.transformButton(constant: -30)
+            footerViewHeightConstraint?.constant = 200
+            footerView?.transformButton(constant: -130)
             self.view.setNeedsLayout()
             
             
@@ -137,7 +137,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
             self.view.layoutSubviews()
             
             checkoutViewHeightConstraint?.constant = 100
-            footerViewHeightConstraint?.constant = 100
+            footerViewHeightConstraint?.constant = 120
             footerView?.transformButton(constant: 30)
             
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [.curveEaseIn, .allowUserInteraction], animations: {
@@ -395,11 +395,11 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         self.footerView?.translatesAutoresizingMaskIntoConstraints = false
         footerView?.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
         
-        footerViewHeightConstraint = NSLayoutConstraint(item: footerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 80)
+        footerViewHeightConstraint = NSLayoutConstraint(item: footerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 0)
         
         self.view.addConstraint(footerViewHeightConstraint!)
         
-        footerView?.bottomAnchor.constraint(equalTo: self.contentView!.bottomAnchor, constant: 0).isActive = true
+        footerView?.bottomAnchor.constraint(equalTo: self.contentView!.bottomAnchor, constant: 120).isActive = true
         
 
         checkoutButton?.setButtonText(titleText: "Checkout")
