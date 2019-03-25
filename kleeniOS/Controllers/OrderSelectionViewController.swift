@@ -24,7 +24,6 @@ enum Days: String, CaseIterable {
 class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrollViewDelegate {
 
 
-    
 
     //Initializing UIViews that make up the majority of this Controller
     var scrollView : UIScrollView?
@@ -77,10 +76,10 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
         
         //Initialize laundry obj
-        laundry = Laundry(baskets: 0, detergent: "None", laundryType: "None")
+        laundry = Laundry(baskets: nil, detergent: nil, laundryType: "")
 
         //Initialize order obj
-        order = Order(orderId: nil, cost: 0, datePlaced: "0/0/0", dropoffDate: "0/0/0", laundry: nil, dropoffDay: "0/0/0")
+        order = Order(orderId: nil, cost: 0, datePlaced: nil, dropoffDate: nil, laundry: nil, dropoffDay: nil)
         
 //        setupCheckoutView()
         setupLaundrySelectionView()
@@ -99,7 +98,6 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         let weekday = Calendar.current.date(byAdding: .day, value: 2, to: Date())
         print(weekday)
         
-    
     }
     
 
@@ -107,7 +105,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         guard let navBar = self.navigationController?.navigationBar else {return}
 
 //        self.checkoutView?.updateConstraints()
-        print("Content Offset: \(scrollView.contentOffset.y)")
+//        print("Content Offset: \(scrollView.contentOffset.y)")
         
         //Approaching the bottom of the scrollView
         if scrollView.contentOffset.y > 350 {
@@ -196,6 +194,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
         checkoutView!.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
     
+        
         checkoutView!.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
         checkoutView!.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
 //        checkoutView.heightAnchor.constraint(equalToConstant: 200).isActive = true
@@ -609,6 +608,10 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         print("Baskets: \(laundry?.baskets)")
         print("Detergent: \(laundry?.detergent)")
         
+        if basketTotal > 0 {
+            checkoutView?.costTitleLabel?.textColor = .black
+        }
+        
     }
     
     func didSelectOption(sender: UIView) {
@@ -675,11 +678,53 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
         let checkoutBtn = sender as? KleenerButton
         checkoutBtn?.enlarge()
+
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let managedObjectContext = appDelegate.persistentContainer.viewContext
-        let kleenPersistor = KleenPersistor(moc: managedObjectContext)
-        kleenPersistor.storeOrder(order: order!, laundry: self.laundry!)
+        if validateOrder() {
+
+            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let managedObjectContext = appDelegate.persistentContainer.viewContext
+            let kleenPersistor = KleenPersistor(moc: managedObjectContext)
+            
+            //Also have to validate the laundry items before you proceed
+            kleenPersistor.storeOrder(order: order!, laundry: self.laundry!)
+        }
+        
+    }
+    
+    func validateOrder() -> Bool {
+        let isCostVerified = order?.verifyCost()
+        let isDatePlaced = order?.verifyDatePlaced()
+        let isDropoffDatePlaced = order?.verifyDropoffDate()
+        
+        if isCostVerified! {
+            
+        }
+        else {
+            checkoutView?.costTitleLabel?.textColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        }
+        
+        if isDatePlaced! {
+            
+        }
+        else {
+            datePopupView?.pickupHeaderLabel?.textColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        }
+        
+        if isDropoffDatePlaced! {
+            
+        } else {
+            datePopupView?.dropoffHeaderLabel?.textColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        }
+
+        if isCostVerified! && isDatePlaced! && isDropoffDatePlaced! {
+            print("All options to place order were selected")
+            return true
+        }
+        
+        return false
+
     }
     
     
@@ -697,7 +742,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
             let dateSelected = day
 
             self.datePopupView?.updatePickupDate(date: dateSelected)
-        
+            self.datePopupView?.pickupHeaderLabel?.textColor = .black
             self.order?.datePlaced = dateSelected
         }
         
@@ -705,6 +750,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         let popoverDirection = UIPopoverArrowDirection(arrayLiteral: .right)
         showPopup(controller, sourceView: sender, direction: popoverDirection)
     }
+    
     
     func selectDropoffDate(sender: UIView) {
 //        let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -717,6 +763,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
 
             self.datePopupView?.updateDropoffDate(date: dateSelected)
             self.order?.dropoffDate = dateSelected
+            self.datePopupView?.dropoffHeaderLabel?.textColor = .black
         }
         
         controller.preferredContentSize = CGSize(width: 250, height: 150)

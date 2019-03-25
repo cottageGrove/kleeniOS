@@ -163,6 +163,7 @@ class BasketSelectionView: UIView {
                 
                 self.basketTotalLabel?.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
                 
+                
                 UIView.animate(withDuration: 0.3, delay: 0, options: .allowUserInteraction, animations: {
                     self.basketTotalLabel?.transform = CGAffineTransform.identity
                 })

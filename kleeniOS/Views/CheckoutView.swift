@@ -17,7 +17,7 @@ class CheckoutView: UIView {
     private var basketTypeLabel: UILabel?
     private var basketTitleLabel: UILabel?
     private var costLabel : UILabel?
-    private var costTitleLabel : UILabel?
+    var costTitleLabel : UILabel?
     private var previousOrderButton: UIButton?
     private var dateTitleLabel: UILabel?
     private var dayTitleLabel: UILabel?

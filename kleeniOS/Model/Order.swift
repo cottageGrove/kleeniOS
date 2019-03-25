@@ -32,5 +32,67 @@ class Order {
         self.dropoffDay = dropoffDay
     }
     
+    func verifyCost() -> Bool {
+        if let cost = cost {
+            
+            if cost > 0 {
+                print("cost \(cost)")
+                return true
+            }
+            print("Cost is not greater than 0")
+            return false
+
+        } else {
+            print("The cost was not updated")
+            return false
+        }
+    }
+    
+    func verifyDatePlaced() -> Bool {
+        
+        if let datePlaced = datePlaced {
+            print("date placed \(datePlaced)")
+            return true
+        } else {
+            print("pickup date was not selected")
+            return false
+        }
+        
+        
+//        if let datePlaced != datePlaced {
+//            print("Date placed \(datePlaced)")
+//        } else {
+//            print("Please select a pickup date")
+//        }
+//
+//        if let dropoffDate = dropoffDate {
+//            print("Dropoff date: \(dropoffDate)")
+//        } else {
+//            print("Please select dropoff date")
+//        }
+//
+//
+//        if let cost = cost {
+//
+//            if cost > 0 {
+//                print("Cost is: \(cost)")
+//            } else {
+//
+//            }
+//        } else {
+//
+//        }
+    }
+    
+    func verifyDropoffDate() -> Bool {
+        if let dropoffDate = dropoffDate {
+            print("dropoff date\(dropoffDate)")
+            return true
+        } else {
+            print("dropoff date not selected")
+            return false
+        }
+    }
+    
     
 }
