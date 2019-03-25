@@ -832,7 +832,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
         checkoutView?.updateTitle(message: "Order Selected")
         
-    
+        
         let ironCheckBox = self.toggleView?.ironRadioView?.checkBox
         
         //Need to collect boolean values of previous orders
@@ -869,6 +869,8 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         self.modalPresentationStyle = .popover
     }
     
+    
+    //getDate Function
     private func getDate(format: String) -> [String] {
 
         let format = "dd-MMM"
