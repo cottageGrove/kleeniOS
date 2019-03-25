@@ -897,6 +897,8 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         return(days)
 
     }
+    
+    //Returns the next 8 days following tomorrow as a [String] Array
     private func getDays() -> [String] {
         let format = "EEEE"
         let dateFormatter = DateFormatter()
