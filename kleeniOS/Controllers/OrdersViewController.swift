@@ -170,7 +170,7 @@ class OrdersViewController: UITableViewController {
         return swipeActionConfig
     }
     
-    //When the row is selected, push the detail ViewController that shows the order information 
+    //When the row is selected, push the detail ViewController that shows the order information
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
 
