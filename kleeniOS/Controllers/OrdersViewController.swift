@@ -133,7 +133,7 @@ class OrdersViewController: UITableViewController {
     
 
     
-    
+    // Protocol that allows you to delete rows in table 
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let order = orders[indexPath.row]
         
