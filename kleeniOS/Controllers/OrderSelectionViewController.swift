@@ -808,9 +808,9 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         let order = Order(orderId: nil, cost: nil, datePlaced: nil, dropoffDate: nil, laundry: nil, dropoffDay: nil)
         let laundry = Laundry(baskets: nil, detergent: "", laundryType: "")
         
-        order.cost = orderMO.cost
-        order.datePlaced = orderMO.datePlaced
-        order.dropoffDate = orderMO.dropoffDate
+        self.order!.cost = orderMO.cost
+        self.order!.datePlaced = orderMO.datePlaced
+        self.order!.dropoffDate = orderMO.dropoffDate
         
         let laundryMO = orderMO.laundryModel
         
@@ -825,7 +825,6 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
         order.laundry = laundry
         
-        
         detergentSelectionView?.reloadDropdown(detergentLabel: laundry.detergent!)
         basketSelectionView?.updateBasketCount(count: laundry.baskets!)
         basketSelectionView?.basketCount = laundry.baskets!
@@ -833,8 +832,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
         checkoutView?.updateTitle(message: "Order Selected")
         
-        
-        
+    
         let ironCheckBox = self.toggleView?.ironRadioView?.checkBox
         
         //Need to collect boolean values of previous orders
@@ -849,6 +847,11 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
         toggleView?.ironRadioView?.refreshCheckBox(sender: ironCheckBox!)
         toggleView?.foldRadioView?.refreshCheckBox(sender: foldCheckbox!)
+        
+        
+        //Update the date
+        datePopupView?.updatePickupDate(date: self.order!.datePlaced!)
+        datePopupView?.updateDropoffDate(date: self.order!.dropoffDate!)
         
     }
 
