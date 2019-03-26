@@ -19,6 +19,7 @@
 		B4604D122249AE0300211E39 /* Screenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = B4604D112249AE0300211E39 /* Screenshot.png */; };
 		B4604D142249AFF000211E39 /* Screenshot2.png in Resources */ = {isa = PBXBuildFile; fileRef = B4604D132249AFF000211E39 /* Screenshot2.png */; };
 		B4604D162249B07500211E39 /* Screenshot3.png in Resources */ = {isa = PBXBuildFile; fileRef = B4604D152249B07500211E39 /* Screenshot3.png */; };
+		B4604D1D2249B51A00211E39 /* Screenshot4.png in Resources */ = {isa = PBXBuildFile; fileRef = B4604D1C2249B51A00211E39 /* Screenshot4.png */; };
 		B46F222A223D4E0F005EB46A /* CollapsibleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F2229223D4E0F005EB46A /* CollapsibleTableViewCell.swift */; };
 		B49AE6DF222C396900602FEA /* Laundry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49AE6DE222C396900602FEA /* Laundry.swift */; };
 		B49F68C42210714A009BA425 /* LaundrySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49F68C32210714A009BA425 /* LaundrySelectionView.swift */; };
@@ -59,6 +60,7 @@
 		B4604D112249AE0300211E39 /* Screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Screenshot.png; sourceTree = "<group>"; };
 		B4604D132249AFF000211E39 /* Screenshot2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Screenshot2.png; sourceTree = "<group>"; };
 		B4604D152249B07500211E39 /* Screenshot3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Screenshot3.png; sourceTree = "<group>"; };
+		B4604D1C2249B51A00211E39 /* Screenshot4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Screenshot4.png; sourceTree = "<group>"; };
 		B46F2229223D4E0F005EB46A /* CollapsibleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleTableViewCell.swift; sourceTree = "<group>"; };
 		B49AE6DE222C396900602FEA /* Laundry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Laundry.swift; sourceTree = "<group>"; };
 		B49F68C32210714A009BA425 /* LaundrySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundrySelectionView.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				B4604D112249AE0300211E39 /* Screenshot.png */,
 				B4604D132249AFF000211E39 /* Screenshot2.png */,
 				B4604D152249B07500211E39 /* Screenshot3.png */,
+				B4604D1C2249B51A00211E39 /* Screenshot4.png */,
 				B43BF3FC2208D77F00EE9405 /* kleeniOS */,
 				B43BF3FB2208D77F00EE9405 /* Products */,
 			);
@@ -269,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B43BF4082208D78100EE9405 /* LaunchScreen.storyboard in Resources */,
+				B4604D1D2249B51A00211E39 /* Screenshot4.png in Resources */,
 				B4604D122249AE0300211E39 /* Screenshot.png in Resources */,
 				B4604D142249AFF000211E39 /* Screenshot2.png in Resources */,
 				B43BF4052208D78100EE9405 /* Assets.xcassets in Resources */,
