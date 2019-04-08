@@ -7,49 +7,55 @@
 //
 
 import UIKit
+import AWSCognitoIdentityProvider
+import AWSAppSync
 
 
-enum Days: String, CaseIterable {
-    case monday = "Monday"
-    case tuesday = "Tuesday"
-    case wednesday = "Wednesday"
-    case thursday = "Thursday"
-    case friday = "Friday"
-    case saturday = "Saturday"
-    case sunday = "Sunday"
+class OrderSelectionViewController: UIViewController, SelectionDelegate, RefreshDelegate, UIScrollViewDelegate {
+    func onSignOut() {
+        print("Signed out man")
+    }
     
+
+    //AWSCognito UserPool setup
+    var response: AWSCognitoIdentityUserGetDetailsResponse?
+    var user: AWSCognitoIdentityUser?
+    var pool: AWSCognitoIdentityUserPool?
     
-}
-
-class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrollViewDelegate {
-
-
+    //AWSAppSync setup
+    var appSyncClient: AWSAppSyncClient?
+    
+    //Initialize PegasusApi()
+    let pegasusAPI = PegasusAPI()
 
     //Initializing UIViews that make up the majority of this Controller
     var scrollView : UIScrollView?
     var detergentSelectionView : ItemSelectionView?
     
-    var detergentSelectionHeightConstraint: NSLayoutConstraint?
-    var checkoutViewHeightConstraint: NSLayoutConstraint?
     var checkoutButton: KleenerButton?
     
     //UIView Components
-    var basketSelectionView : BasketSelectionView?
-    var toggleView : ToggleView?
+
     var orderView : UIView?
     var contentView: UIView?
+    var backgroundView : UIView?
     var checkoutView: CheckoutView?
     var datePopupView: DatePopup?
-    var backgroundView : UIView?
-    
-    var footerView: FooterView?
-    
 
+    var basketSelectionView : BasketSelectionView?
+    var toggleView : ToggleView?
+    var summaryPopup: SummaryPopup?
+    var footerView: FooterView?
+    var timePicker: UIDatePicker?
+    
     //Constraints for autolayout manipulation
     var checkoutBarButtonItem: UIBarButtonItem?
     var footerViewHeightConstraint: NSLayoutConstraint?
-    var imageView : UIImageView?
+    var detergentSelectionHeightConstraint: NSLayoutConstraint?
+    var checkoutViewHeightConstraint: NSLayoutConstraint?
+    var summaryPopupTopConstraint: NSLayoutConstraint?
     
+    var imageView : UIImageView?
     
     //Enum selected for the day of the week
     var day = Days.monday
@@ -69,26 +75,69 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+//
+
+        
+//        pegasusAPI.createUser(username: "roofoi") { (userID) in
+//            print("User id returned \(userID)")
+//        }
+        
+        
+        //setup the userpool and present the login view controller if the user is not currently logged in
+        self.pool = AWSCognitoIdentityUserPool(forKey: AWSCognitoUserPoolsSignInProviderKey)
+        if(self.user == nil) {
+            self.user = self.pool?.currentUser()
+        }
+        
+        self.refresh()
+        
+        let username = user!.username!
+        
+        pegasusAPI.findUser(username: username) { (user, orders) in
+            print(user.firstName ?? "nil")
+            print(user.lastName ?? "nil")
+            print(user.username  ?? "nil")
+            
+            guard let unwrappedOrders = orders else {return}
+            
+            for order in unwrappedOrders {
+                print(order.cost  ?? "nil")
+                print(order.pickupDate ?? "nil")
+                print(order.dropoffDate  ?? "nil")
+                print(order.id ?? "nil")
+                
+                print(order.laundry?.baskets ?? "nil")
+                print(order.laundry?.detergent ?? "detergent")
+            }
+            
+        }
+        
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//        appSyncClient = appDelegate.appSyncClient
+//        
+
         
         view.backgroundColor = .white
-        
         
         //Initialize laundry obj
         laundry = Laundry(baskets: nil, detergent: nil, laundryType: "")
 
         //Initialize order obj
-        order = Order(orderId: nil, cost: 0, datePlaced: nil, dropoffDate: nil, laundry: nil, dropoffDay: nil)
+        order = Order(id: nil, cost: 0, datePlaced: nil, dropoffDate: nil, laundry: nil, pickupDate: nil)
         
 //        setupCheckoutView()
         setupLaundrySelectionView()
         setupBarItems()
+        setupSummaryPopup()
 
         detergentSelectionView?.delegate = self
         basketSelectionView?.delegate = self
         checkoutView?.delegate = self
         datePopupView?.delegate = self
+        summaryPopup?.delegate = self
         footerView?.delegate = self
         
         //might have to clean this up
@@ -100,6 +149,16 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
     }
     
+    func refresh() {
+        self.user?.getDetails().continueOnSuccessWith(block: { (task) -> Any? in
+            DispatchQueue.main.async {
+                self.response = task.result
+                print(self.user?.username)
+            }
+            return nil
+        })
+    }
+    
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard let navBar = self.navigationController?.navigationBar else {return}
@@ -108,7 +167,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
 //        print("Content Offset: \(scrollView.contentOffset.y)")
         
         //Approaching the bottom of the scrollView
-        if scrollView.contentOffset.y > 350 {
+        if scrollView.contentOffset.y > 270 {
 //            self.view.layoutSubviews()
 
             checkoutViewHeightConstraint?.constant = 205
@@ -210,9 +269,12 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         let screenHeight = screenSize.height
         datePopupView?.translatesAutoresizingMaskIntoConstraints = false
         datePopupView?.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
-        datePopupView?.heightAnchor.constraint(equalToConstant: 160).isActive = true
+        datePopupView?.heightAnchor.constraint(equalToConstant: 167).isActive = true
 //        datePopupView?.topAnchor.constraint(equalTo: self.toggleView!.bottomAnchor).isActive = true
-        datePopupView?.topAnchor.constraint(equalTo: self.toggleView!.bottomAnchor, constant: 10).isActive = true
+//        datePopupView?.topAnchor.constraint(equalTo: self.toggleView!.bottomAnchor, constant: 10).isActive = true
+        
+//        datePopupView?.bottomAnchor.constraint(equalTo: self.footerView!.topAnchor).isActive = true
+        datePopupView?.bottomAnchor.constraint(equalTo: self.contentView!.bottomAnchor, constant: -100).isActive = true
         datePopupView?.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
     }
     
@@ -241,60 +303,98 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
     }
     
-    func setupBarButton() {
+    func setupSummaryPopup() {
+        let frame = self.view.safeAreaLayoutGuide.layoutFrame
+        let navigationBarHeight = self.navigationController?.navigationBar.bounds.height
         
+        let screenSize = UIScreen.main.bounds
+        let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
         
-        guard let navBar = self.navigationController?.navigationBar else {return}
+        print("THIS IS THE SCREEN HEIGHT! \(frame.height - navigationBarHeight!)")
         
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(#imageLiteral(resourceName: "large_shopping_cart"), for: .normal)
-        button.frame = CGRect(x: 0, y: 40, width: 96, height: 96)
-        button.widthAnchor.constraint(equalToConstant: 96).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 96).isActive = true
-
-
-        button.addTarget(self, action: #selector(showClick), for: .touchUpInside)
-        button.backgroundColor = .yellow
-        checkoutBarButtonItem = UIBarButtonItem(customView: button)
-        self.navigationItem.rightBarButtonItem = self.checkoutBarButtonItem
-        print("Are we even setting up the bar button")
+        let rect = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
+        self.summaryPopup = SummaryPopup(frame: rect)
+        self.view.addSubview(self.summaryPopup!)
         
-        guard var frame = self.navigationItem.rightBarButtonItem?.customView?.frame else {return}
-        frame.size.height = 96
-        frame.size.width = 96
-        self.navigationItem.rightBarButtonItem?.customView?.frame = frame
+        summaryPopup?.translatesAutoresizingMaskIntoConstraints = false
         
+        summaryPopup?.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
+        summaryPopup?.heightAnchor.constraint(equalToConstant: frame.height).isActive = true
         
-        let dateItem = UIButton()
-        dateItem.translatesAutoresizingMaskIntoConstraints = false
-        dateItem.setImage(#imageLiteral(resourceName: "calender_icon"), for: .normal)
-        dateItem.frame = CGRect(x: 0, y: 40, width: 40, height: 40)
-    
-        dateItem.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        dateItem.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        summaryPopupTopConstraint = NSLayoutConstraint(item: self.summaryPopup!, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: 0)
         
-        dateItem.addTarget(self, action: #selector(showClick), for: .touchUpInside)
-
-        
-//        navBar.layoutIfNeeded()
+        self.view.addConstraint(summaryPopupTopConstraint!)
         
     }
+    
+//    func setupBarButton() {
+//
+//
+//        guard let navBar = self.navigationController?.navigationBar else {return}
+//
+//        let button = UIButton()
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.setImage(#imageLiteral(resourceName: "large_shopping_cart"), for: .normal)
+//        button.frame = CGRect(x: 0, y: 40, width: 96, height: 96)
+//        button.widthAnchor.constraint(equalToConstant: 96).isActive = true
+//        button.heightAnchor.constraint(equalToConstant: 96).isActive = true
+//
+//
+//        button.addTarget(self, action: #selector(showClick), for: .touchUpInside)
+//
+//
+//        button.backgroundColor = .yellow
+//        checkoutBarButtonItem = UIBarButtonItem(customView: button)
+//
+//        self.navigationItem.rightBarButtonItem = self.checkoutBarButtonItem
+//        print("Are we even setting up the bar button")
+//
+//        checkoutBarButtonItem?.isEnabled = false
+//        checkoutBarButtonItem?.tintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+//
+//        guard var frame = self.navigationItem.rightBarButtonItem?.customView?.frame else {return}
+//        frame.size.height = 96
+//        frame.size.width = 96
+//        self.navigationItem.rightBarButtonItem?.customView?.frame = frame
+//
+//
+//        let dateItem = UIButton()
+//        dateItem.translatesAutoresizingMaskIntoConstraints = false
+//        dateItem.setImage(#imageLiteral(resourceName: "calender_icon"), for: .normal)
+//        dateItem.frame = CGRect(x: 0, y: 40, width: 40, height: 40)
+//
+//        dateItem.widthAnchor.constraint(equalToConstant: 40).isActive = true
+//        dateItem.heightAnchor.constraint(equalToConstant: 40).isActive = true
+//
+//        dateItem.addTarget(self, action: #selector(showClick), for: .touchUpInside)
+//
+//
+////        navBar.layoutIfNeeded()
+//
+//    }
     
     @objc func showClick() {
         print("Clicked")
 
     }
     
+
+    
     func setupBarItems() {
         
         guard let navBar = self.navigationController?.navigationBar else {return}
         let image = UIImage(named: "large_shopping_cart")
-        let imageView = UIImageView(image: image)
+        let tintedImage = image?.withRenderingMode(.alwaysTemplate)
+        let imageView = UIImageView(image: tintedImage)
+        
+
 
         self.imageView = imageView
 
         let checkButton = UIBarButtonItem(customView: self.imageView!)
+        
+        self.imageView?.tintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         
 //        let calendarButton = UIBarButtonItem(image: #imageLiteral(resourceName: "calender_icon"), landscapeImagePhone: nil, style: .plain, target: self, action: #selector(tappedCheckout(_:)))
         
@@ -303,6 +403,8 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         print("This is the navbar height when the view loads \(navBar.bounds.height)")
 
         checkoutBarButtonItem = checkButton
+        checkoutBarButtonItem?.isEnabled = false
+
  
         self.navigationItem.rightBarButtonItem = checkoutBarButtonItem
         checkoutBarButtonItem?.customView?.addGestureRecognizer(tapGestureRecognizer)
@@ -325,7 +427,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
     @objc func tappedCheckout(_ sender: UIBarButtonItem) {
         
         print("checkoutbutton was selected")
-        imageView?.tintColor = .purple
+//        imageView?.tintColor = .purple
         
 
         self.imageView?.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
@@ -381,8 +483,33 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
         setupBasketSelectionViewConstraints()
         setupToggleViewConstraint()
+        
+        //TODO may need to change the way this is
+//        setupTimePicker()
         setupCalendarPopupView()
         setupFooterView()
+        
+    }
+    
+    func setupTimePicker() {
+        
+        let screenSize = UIScreen.main.bounds
+        let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
+    
+        let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
+        timePicker = UIDatePicker(frame: rect)
+        timePicker?.datePickerMode = .countDownTimer
+        timePicker?.minuteInterval = 15
+        
+        self.contentView?.addSubview(timePicker!)
+        timePicker?.translatesAutoresizingMaskIntoConstraints = false
+        timePicker?.topAnchor.constraint(equalTo: self.toggleView!.bottomAnchor, constant: 20).isActive = true
+        timePicker?.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
+        timePicker?.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        
+//        timePicker?.countDownDuration = TimeInterval(
+        
         
     }
     
@@ -422,11 +549,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         order?.laundry = laundry
         checkoutVC.order = order
 //        checkoutVC.refreshOrder()
-        
-        
-
-        
-        
+   
         //        self.present(checkoutVC, animated: true, completion: nil)
         self.navigationController?.pushViewController(checkoutVC, animated: true)
         
@@ -435,7 +558,6 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
     
     func setupScrollView() {
 
-        
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
@@ -462,10 +584,8 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
         scrollView?.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0).isActive = true
         scrollView?.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0).isActive = true
-
         scrollView?.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
         scrollView?.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
-        
         
 //        contentView?.topAnchor.constraint(equalTo: scrollView!.topAnchor, constant: 0).isActive = true
         contentView?.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
@@ -505,14 +625,14 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         toggleView?.widthAnchor.constraint(equalToConstant: screenSize.width).isActive = true
         toggleView?.heightAnchor.constraint(equalToConstant: 120).isActive = true
         toggleView?.centerXAnchor.constraint(equalTo: self.contentView!.centerXAnchor).isActive = true
-        toggleView?.topAnchor.constraint(equalTo: self.basketSelectionView!.bottomAnchor, constant: 10).isActive = true
+        toggleView?.topAnchor.constraint(equalTo: self.basketSelectionView!.bottomAnchor, constant: 20).isActive = true
         
     }
     
     
     func setupDetergentSelectionViewConstraints() {
         detergentSelectionView?.translatesAutoresizingMaskIntoConstraints = false
-        detergentSelectionView?.topAnchor.constraint(equalTo: self.contentView!.topAnchor, constant: 0).isActive = true
+        detergentSelectionView?.topAnchor.constraint(equalTo: self.contentView!.topAnchor, constant: 10).isActive = true
         detergentSelectionView?.centerXAnchor.constraint(equalTo: self.contentView!.centerXAnchor).isActive = true
         detergentSelectionView?.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
         
@@ -530,7 +650,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
         basketSelectionView?.layoutSubviews()
         
-        basketSelectionView?.topAnchor.constraint(equalTo: detergentSelectionView!.bottomAnchor, constant: 10).isActive = true
+        basketSelectionView?.topAnchor.constraint(equalTo: detergentSelectionView!.bottomAnchor, constant: 20).isActive = true
 
         basketSelectionView?.centerXAnchor.constraint(equalTo: self.contentView!.centerXAnchor).isActive = true
         basketSelectionView?.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
@@ -609,8 +729,18 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         print("Detergent: \(laundry?.detergent)")
         
         if basketTotal > 0 {
+//            imageView?.tintColor = #colorLiteral(red: 0.003173338249, green: 0.4873039126, blue: 0.9982392192, alpha: 1)
+//            checkoutBarButtonItem?.isEnabled = true
             checkoutView?.costTitleLabel?.textColor = .black
+            validateOrder()
         }
+        
+        if basketTotal == 0 {
+            imageView?.tintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            checkoutBarButtonItem?.isEnabled = false
+        }
+        
+        
         
     }
     
@@ -631,12 +761,40 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         } else {
             print("The \(option) was unselected")
         }
-        
-        
     }
     
+    func draggedUp(cView: UIView) {
+        print("did drag summaryPopup up")
+        
+        summaryPopupTopConstraint?.isActive = false
+        summaryPopupTopConstraint?.constant = -200
+        summaryPopupTopConstraint?.isActive = true
+        
+        //Need to call this otherwise the constraints will not update for the subviews
+        self.view.setNeedsLayout()
+        
+        UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [.curveEaseIn, .allowUserInteraction], animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+        
+
+    }
+    
+    func draggedDown(cView: UIView) {
+        summaryPopupTopConstraint?.isActive = true
+        summaryPopupTopConstraint?.constant = 0
+        summaryPopupTopConstraint?.isActive = true
+        
+        UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [.curveEaseIn, .allowUserInteraction], animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+        
+        print("did drag summaryPopup down")
+    }
+    
+    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        print("Scrollview is tapped:")
+//        print("Scrollview is tapped:")
     }
 
     
@@ -678,24 +836,42 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
         let checkoutBtn = sender as? KleenerButton
         checkoutBtn?.enlarge()
+        
 
         
+        
+//      If the order is validated
+
         if validateOrder() {
+//
+//
+//            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//            let managedObjectContext = appDelegate.persistentContainer.viewContext
+//            let kleenPersistor = KleenPersistor(moc: managedObjectContext)
+//
+//            //Also have to validate the laundry items before you proceed
+//            kleenPersistor.storeOrder(order: order!, laundry: self.laundry!)
+           
+            self.imageView?.tintColor = #colorLiteral(red: 0.003173338249, green: 0.4873039126, blue: 0.9982392192, alpha: 1)
+            checkoutBarButtonItem?.isEnabled = true
+            
+            summaryPopupTopConstraint!.constant = -200
+            
+            UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [.curveEaseIn, .allowUserInteraction], animations: {
+                self.view.layoutIfNeeded()
+            }, completion: nil)
 
-            
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let managedObjectContext = appDelegate.persistentContainer.viewContext
-            let kleenPersistor = KleenPersistor(moc: managedObjectContext)
-            
-            //Also have to validate the laundry items before you proceed
-            kleenPersistor.storeOrder(order: order!, laundry: self.laundry!)
-        }
+//            //might need to be changed to just runOrderMutation()
+            pegasusAPI.runLaundryMutation(laundry: laundry!, order: order!)
         
+
+        }
+    
     }
     
     func validateOrder() -> Bool {
         let isCostVerified = order?.verifyCost()
-        let isDatePlaced = order?.verifyDatePlaced()
+        let isPickupDatePlaced = order?.verifyDatePlaced()
         let isDropoffDatePlaced = order?.verifyDropoffDate()
         
         if isCostVerified! {
@@ -705,7 +881,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
             checkoutView?.costTitleLabel?.textColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
         }
         
-        if isDatePlaced! {
+        if isPickupDatePlaced! {
             
         }
         else {
@@ -718,10 +894,17 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
             datePopupView?.dropoffHeaderLabel?.textColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
         }
 
-        if isCostVerified! && isDatePlaced! && isDropoffDatePlaced! {
+        if isCostVerified! && isPickupDatePlaced! && isDropoffDatePlaced! {
             print("All options to place order were selected")
+            
+            self.imageView?.tintColor = #colorLiteral(red: 0.003173338249, green: 0.4873039126, blue: 0.9982392192, alpha: 1)
+            checkoutBarButtonItem?.isEnabled = true
             return true
         }
+        
+        self.imageView?.tintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        checkoutBarButtonItem?.isEnabled = false
+        
         
         return false
 
@@ -743,7 +926,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
 
             self.datePopupView?.updatePickupDate(date: dateSelected)
             self.datePopupView?.pickupHeaderLabel?.textColor = .black
-            self.order?.datePlaced = dateSelected
+            self.order?.pickupDate = dateSelected
         }
         
         controller.preferredContentSize = CGSize(width: 250, height: 150)
@@ -777,18 +960,31 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         let managedObjectContext = appDelegate.persistentContainer.viewContext
         let kleenPersistor = KleenPersistor(moc: managedObjectContext)
 
-        let orders = kleenPersistor.retreiveOrders()
-        let lastOrder = orders.last
+//        let orders = kleenPersistor.retreiveOrders()
+        
+        var updatedOrders = [Order]()
+        
+//        let lastOrder = updatedOrders.last
 
         var order : OrderModelMO?
+        
+        pegasusAPI.findUser(username: user!.username!) { (user, orders) in
+            print(user.firstName ?? "nil")
+            print(user.lastName ?? "nil")
+            print(user.username  ?? "nil")
+            guard let unwrappedOrders = orders else {return}
+            updatedOrders = unwrappedOrders
+            
+        }
 
 
-        let controller2 = OrdersViewController(orders: orders) { (previousOrder) in
+        let controller2 = OrdersViewController(orders: updatedOrders) { (previousOrder) in
             
             print("going into previous order")
             let order = previousOrder
             print("order selected \(order)")
-            self.restorePreviousOrder(orderMO: order)
+            self.restorePreviousOrder(order: order)
+            
         }
         
 
@@ -802,33 +998,35 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
     
     
     //This method retrieves orders from the data store and refreshes the UIComponents to match the options from a previous order
-    func restorePreviousOrder(orderMO: OrderModelMO) {
+    func restorePreviousOrder(order: Order) {
         
         
-        let order = Order(orderId: nil, cost: nil, datePlaced: nil, dropoffDate: nil, laundry: nil, dropoffDay: nil)
-        let laundry = Laundry(baskets: nil, detergent: "", laundryType: "")
+//        let order = Order(id: nil, cost: nil, datePlaced: nil, dropoffDate: nil, laundry: nil, pickupDate: nil)
+//        let laundry = Laundry(baskets: nil, detergent: "", laundryType: "")
+//
+//        self.order!.cost = order.cost
+//        self.order!.pickupDate = order.pickupDate
+//        self.order!.dropoffDate = order.dropoffDate
+//
+//        print(self.order?.laundry?.detergent)
+////        let laundryMO = order.laundr
+//
+//
+//
+//        //Strangenessness :|
+////        let int16baskets : Int16 = laundryMO!.baskets
+////        let baskets : Int = Int(int16baskets)
+//
+//        laundry.baskets = order.laundry?.baskets
+//        laundry.detergent = order.laundry?.detergent
+//        laundry.washType = order.laundry?.washType
         
-        self.order!.cost = orderMO.cost
-        self.order!.datePlaced = orderMO.datePlaced
-        self.order!.dropoffDate = orderMO.dropoffDate
+//        order.laundry = laundry
         
-        let laundryMO = orderMO.laundryModel
-        
-        
-        //Strangenessness :|
-        let int16baskets : Int16 = laundryMO!.baskets
-        let baskets : Int = Int(int16baskets)
-        
-        laundry.baskets = (baskets)
-        laundry.detergent = laundryMO?.detergent
-        laundry.laundryType = laundryMO?.laundryType
-        
-        order.laundry = laundry
-        
-        detergentSelectionView?.reloadDropdown(detergentLabel: laundry.detergent!)
-        basketSelectionView?.updateBasketCount(count: laundry.baskets!)
-        basketSelectionView?.basketCount = laundry.baskets!
-        basketSelectionView?.updateCost(count: laundry.baskets!)
+        detergentSelectionView?.reloadDropdown(detergentLabel: order.laundry!.detergent!)
+        basketSelectionView?.updateBasketCount(count: order.laundry!.baskets!)
+        basketSelectionView?.basketCount = order.laundry!.baskets!
+        basketSelectionView?.updateCost(count: order.laundry!.baskets!)
         
         checkoutView?.updateTitle(message: "Order Selected")
         
@@ -850,8 +1048,8 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
         
         //Update the date
-        datePopupView?.updatePickupDate(date: self.order!.datePlaced!)
-        datePopupView?.updateDropoffDate(date: self.order!.dropoffDate!)
+        datePopupView?.updatePickupDate(date: order.pickupDate!)
+        datePopupView?.updateDropoffDate(date: order.dropoffDate!)
         
     }
 
@@ -939,8 +1137,6 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
 //            return Calendar.current.dateComponents([.weekday], from: self).weekday
 //        }
         
-
-        
         switch day {
             case .monday:
                 return 3
@@ -960,6 +1156,29 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
     }
     
+    func proceedToCheckout(proceedButton: UIButton) {
+        print("TODO Checkout!")
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem()
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+        checkoutVC.navigationItem.title = "Checkout"
+        
+        order?.laundry = laundry
+        checkoutVC.order = order
+        //        checkoutVC.refreshOrder()
+        
+        //        self.present(checkoutVC, animated: true, completion: nil)
+        self.navigationController?.pushViewController(checkoutVC, animated: true)
+        
+        self.summaryPopupTopConstraint?.constant = 0
+        
+        UIView.animate(withDuration: 0.5, delay: 1, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [.curveEaseIn, .allowUserInteraction], animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+        
+
+    }
+    
     //Return the day of the week
     private func convertDayToDate(day: Int) -> String {
         
@@ -972,13 +1191,17 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, UIScrol
         
     }
 
-    
-    
 
-    
-    
-    
+}
 
-
+enum Days: String, CaseIterable {
+    case monday = "Monday"
+    case tuesday = "Tuesday"
+    case wednesday = "Wednesday"
+    case thursday = "Thursday"
+    case friday = "Friday"
+    case saturday = "Saturday"
+    case sunday = "Sunday"
+    
 }
 

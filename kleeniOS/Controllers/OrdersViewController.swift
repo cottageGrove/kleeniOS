@@ -8,26 +8,37 @@
 
 import Foundation
 import UIKit
+import AWSCognitoIdentityProvider
 class OrdersViewController: UITableViewController {
 
-    typealias Selectionhandler = (OrderModelMO) -> Void
+    typealias Selectionhandler = (Order) -> Void
     
     fileprivate let cellId = "cellId"
     var selectedIndexPath: IndexPath? = nil
     var orderCell: OrderCell?
+    var user: AWSCognitoIdentityUser?
+    var pool: AWSCognitoIdentityUserPool?
+
     
     
     private let onSelect : Selectionhandler?
     
-    var orders : [OrderModelMO]! {
+//    var orders : [OrderModelMO]! {
+//        didSet {
+//            updateOrdersTable()
+//        }
+//    }
+    
+    var order : Order?
+    var ordersData : [OrderModelMO]?
+    
+    var orders : [Order]! {
         didSet {
             updateOrdersTable()
         }
     }
     
-    var order : OrderModelMO?
-    
-    var ordersData : [OrderModelMO]?
+//    var orders = [Order]()
     
     func updateOrdersTable() {
         DispatchQueue.main.async {
@@ -35,61 +46,102 @@ class OrdersViewController: UITableViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let moc = appDelegate.persistentContainer.viewContext
-        let kleenPersistor = KleenPersistor(moc: moc)
-        self.orders = kleenPersistor.retreiveOrders()
-        
-        print(self.orders)
-    
-//        self.tableView.reloadData()
-        self.updateOrdersTable()
-        
-        print("selecting orders history tabBar controller")
+    func configureRefreshControl() {
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action:#selector(handleRefreshControl), for: .valueChanged)
         
     }
     
     
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        //        return orders.count
-//
-//        return orders[section].collapsed ? 0 : orders.count
-//    }
+    @objc func handleRefreshControl() {
+        // Update your content…
+        
+        //need to initialize everytime otherwise we will keep appending
+        //Will require a fix for this
+        let pegasusAPI = PegasusAPI()
+        DispatchQueue.main.async {
+            pegasusAPI.findUser(username: "roofoi", completionHandler: { (user, orderItems) in
+                self.orders = orderItems
+                self.tableView.reloadData()
+            })
+        }
+
+        // Dismiss the refresh control.
+        DispatchQueue.main.async {
+            self.tableView.refreshControl?.endRefreshing()
+        }
+
+    }
     
-    
-    
-    init(orders: [OrderModelMO]? = nil, onSelect: Selectionhandler? = nil) {
+    init(orders: [Order]? = nil, onSelect: Selectionhandler? = nil) {
         self.onSelect = onSelect
         self.orders = orders
         super.init(style: .plain)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-        
-    }
-    
-
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupTableView()
-//        tableView.estimatedRowHeight = 100.0
+        let pegasusAPI = PegasusAPI()
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let moc = appDelegate.persistentContainer.viewContext
-        let kleenPersistor = KleenPersistor(moc: moc)
-        orders = kleenPersistor.retreiveOrders()
-        
-//        tableView.estimatedRowHeight = 120
+//        //setup the userpool and present the login view controller if the user is not currently logged in
+        self.pool = AWSCognitoIdentityUserPool(forKey: AWSCognitoUserPoolsSignInProviderKey)
 
-        
+        if(self.user == nil) {
+            self.user = self.pool?.currentUser()
 
+        }
+        
+//        self.refresh()
+        
+        let username = user!.username!
+        
+        print("Username: \(username)")
+        
+        
+        //TODO:- requires a fix
+        pegasusAPI.findUser(username: username) { (user, orders) in
+            self.orders = orders
+        }
+        
+        self.tableView.reloadData()
+        self.updateOrdersTable()
+        
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let pegasusAPI = PegasusAPI()
+        
+        self.pool = AWSCognitoIdentityUserPool(forKey: AWSCognitoUserPoolsSignInProviderKey)
+        self.user = self.pool?.currentUser()
+
+        self.refresh()
+        
+        //TODO:- requires a fix
+        print("Username: \(user!.username!)")
+//        self.refresh()
+    
+        pegasusAPI.findUser(username: self.user!.username!) { (user, orders) in
+            self.orders = orders
+            print("Updating orders!")
+            self.tableView.reloadData()
+            
+            print("Count \(self.orders.count)")
+        }
+
+        print("selecting orders history tabBar controller")
+        
+    }
+
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+        
+    }
+
     func setupTableView() {
         let nib = UINib(nibName: "OrderCell", bundle: nil)
         tableView.delegate = self
@@ -111,22 +163,17 @@ class OrdersViewController: UITableViewController {
         
         cell.accessoryType = .disclosureIndicator
         let accessoryView = cell.accessoryType  
-        
     
+        //get the order that will be displayed in each row
         let order = orders[indexPath.row]
 
         cell.datePlacedLabel.text = order.datePlaced
         cell.deliveryDateLabel.text = order.dropoffDate
-        
-        print(cell.datePlacedLabel.text)
-        print(cell.deliveryDateLabel.text)
         cell.index = indexPath.row
         
         //VERY IMPORTANT! Have to assign the order to the cell in order for it to update!
-        cell.orderModelMO = order
-
-        
-//        cell.layoutIfNeeded()
+//        cell.orderModelMO = order
+        cell.order = order
 
         return cell
     }
@@ -147,11 +194,10 @@ class OrdersViewController: UITableViewController {
             
             completionHandler(true)
             
-            moc.delete(order)
+//            moc.delete(order)
             
             self.orders.remove(at: indexPath.row)
             self.tableView.reloadData()
-            
             
             
         }
@@ -172,68 +218,34 @@ class OrdersViewController: UITableViewController {
     
     //When the row is selected, push the detail ViewController that shows the order information
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-
-        
+    
         let order = orders[indexPath.row]
         self.order = order
-        
         let checkoutVC = CheckoutViewController()
+//        checkoutVC.removePaymentOption()
         
-        let updatedOrder = Order(datePlaced: nil, dropoffDate: nil, laundry: nil, dropoffDay: nil)
-        updatedOrder.cost = order.cost
-        updatedOrder.datePlaced = order.datePlaced
-        updatedOrder.dropoffDate = order.dropoffDate
-        
-        let laundryModel = order.laundryModel
-        let laundry = Laundry(baskets: nil, detergent: nil, laundryType: nil)
-        laundry.baskets = Int(laundryModel!.baskets)
-        laundry.detergent = laundryModel!.detergent
-        
-        updatedOrder.laundry = laundry
-        
-        checkoutVC.order = updatedOrder
+        checkoutVC.order = order
 //        checkoutVC.refreshOrder()
         navigationController?.pushViewController(checkoutVC, animated: true)
 
-
         self.dismiss(animated: true)
         self.onSelect?(order)
+        checkoutVC.removePaymentOption()
 
     }
-    
-    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return orders.count
     }
     
-    
-//    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//
-//        let header = UITableViewHeaderFooterView(reuseIdentifier: "header") as? CollapsibleTableViewHeader ?? CollapsibleTableViewHeader(reuseIdentifier: "header")
-//
-//        header.orderIdLabel.text = "Pending Orders"
-////            orders[section].cost
-//        header.section = section
-//        header.delegate = self
-//        return header
-//    }
-    
-//    func toggleSection(_ header: CollapsibleTableViewHeader, section: Int) {
-//
-//        let collapsed = !orders[section].collapsed
-//        orders[section].collapsed = collapsed
-//        tableView.reloadSections(NSIndexSet(index: section) as IndexSet, with: .automatic)
-//
-//        print("Order has been pressed in tableView")
-//        tableView.reloadSections(NSIndexSet(index: section) as IndexSet, with: .automatic)
-//    }
-    
-//    func didSelectOrder(onSelect: Selectionhandler?) {
-//        self.onSelect?(order!)
-//    }
-    
-
+    func refresh() {
+        self.user?.getDetails().continueOnSuccessWith(block: { (task) -> Any? in
+            DispatchQueue.main.async {
+//                self.response = task.result
+                print(self.user?.username)
+            }
+            return nil
+        })
+    }
 
 }

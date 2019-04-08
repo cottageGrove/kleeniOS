@@ -32,7 +32,8 @@ class RadioView: UIView {
         let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
         optionLabel = UILabel(frame: rect)
         optionLabel?.font = UIFont(name: "San Francisco", size: 16)
-        optionLabel?.textColor = #colorLiteral(red: 0.4439296126, green: 0.4412950277, blue: 0.4459576011, alpha: 1)
+        optionLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        optionLabel?.textColor = #colorLiteral(red: 0.5481344461, green: 0.5482298732, blue: 0.5481218696, alpha: 1)
         
         self.addSubview(optionLabel!)
         optionLabel?.translatesAutoresizingMaskIntoConstraints = false

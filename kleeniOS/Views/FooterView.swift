@@ -22,7 +22,10 @@ class FooterView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        self.backgroundColor = .white
+        self.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        self.layer.borderWidth = 0.3
+        self.layer.cornerRadius = 15
         setupView()
     }
     

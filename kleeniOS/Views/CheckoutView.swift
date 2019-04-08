@@ -41,7 +41,7 @@ class CheckoutView: UIView {
         checkoutTitleLabel = UILabel(frame: rect)
         
         checkoutTitleLabel?.font = UIFont(name: "San Francisco", size: 20)
-        checkoutTitleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .medium)
+        checkoutTitleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         
         self.addSubview(checkoutTitleLabel!)
 

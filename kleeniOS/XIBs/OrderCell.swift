@@ -26,17 +26,28 @@ class OrderCell: UITableViewCell {
     
     @IBOutlet weak var height: NSLayoutConstraint!
     
-    var orderModelMO: OrderModelMO! {
+//    var orderModelMO: OrderModelMO! {
+//        didSet {
+//            orderIdLabel.text = "0000"
+////            print(orderModelMO.datePlaced)
+////            print(orderModelMO.dropoffDate)
+//            datePlacedLabel.text = orderModelMO.datePlaced
+//            deliveryDateLabel.text = orderModelMO.dropoffDate
+//            statusLabel.text = "Pending"
+//
+//        }
+//    }
+    
+    var order: Order! {
         didSet {
-            orderIdLabel.text = "0000"
-            print(orderModelMO.datePlaced)
-            print(orderModelMO.dropoffDate)
-            datePlacedLabel.text = orderModelMO.datePlaced
-            deliveryDateLabel.text = orderModelMO.dropoffDate
+            let orderIDSubscript = order.id?.components(separatedBy: "-").last
+            orderIdLabel.text = orderIDSubscript
+            datePlacedLabel.text = order.pickupDate
+            deliveryDateLabel.text = order.dropoffDate
             statusLabel.text = "Pending"
-            
         }
     }
+    
     
     var newHeight: CGFloat! {
         didSet {

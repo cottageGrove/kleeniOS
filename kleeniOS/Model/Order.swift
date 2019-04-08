@@ -9,28 +9,33 @@
 import Foundation
 
 class Order {
-    var orderId: Int?
+    var id: String?
     var cost: Double?
     var datePlaced: String?
     var dropoffDate: String?
-    var dropoffDay: String?
+    var pickupDate: String?
     var laundry: Laundry?
     
-    init(orderId: Int?, cost: Double?, datePlaced: String?, dropoffDate: String?, laundry: Laundry?, dropoffDay: String?) {
-        self.orderId = orderId
+    //Default initializer with empty fields
+    init() {}
+    
+    init(id: String?, cost: Double?, datePlaced: String?, dropoffDate: String?, laundry: Laundry?, pickupDate: String?) {
+        self.id = id
         self.cost = cost
         self.datePlaced = datePlaced
-        self.dropoffDate = dropoffDate
+        self.pickupDate = pickupDate
         self.laundry = laundry
-        self.dropoffDay = dropoffDay
     }
     
-    init(datePlaced: String?, dropoffDate: String?, laundry: Laundry?, dropoffDay: String?) {
+    init(datePlaced: String?, dropoffDate: String?, laundry: Laundry?, pickupDate: String?) {
         self.datePlaced = datePlaced
         self.dropoffDate = dropoffDate
         self.laundry = laundry
-        self.dropoffDay = dropoffDay
+        self.pickupDate = pickupDate
+
     }
+    
+
     
     func verifyCost() -> Bool {
         if let cost = cost {
@@ -50,8 +55,8 @@ class Order {
     
     func verifyDatePlaced() -> Bool {
         
-        if let datePlaced = datePlaced {
-            print("date placed \(datePlaced)")
+        if let pickupDatePlaced = pickupDate {
+            print("date placed \(pickupDatePlaced)")
             return true
         } else {
             print("pickup date was not selected")

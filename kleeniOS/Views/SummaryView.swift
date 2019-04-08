@@ -178,14 +178,18 @@ class SummaryView: UIView {
         let totalTruncated = total.truncate(places: 2)
         let deliveryFee = 4.00.truncate(places: 2)
         
+//        String(format:"%.2f", pi)
+        
+        let totalCost = hst + total + 4.00
+        
         if total > 0 {
-            additionalCostLabel!.text = "+ \(hstTruncated) HST + $\(String(deliveryFee)) delivery fee + Basket Total $\(totalTruncated)"
+            
+            additionalCostLabel!.text = "+ \(hstTruncated) HST + $\(String(format: "%.2f", deliveryFee)) delivery fee + Basket Total $\(String(format: "%.2f", totalTruncated))"
             additionalCostLabel?.textColor = .black
         } else {
             additionalCostLabel!.text = "Please add baskets before proceeding"
             additionalCostLabel?.textColor = #colorLiteral(red: 0.1891142726, green: 0.5840495825, blue: 1, alpha: 1)
         }
-
     }
     
     func updateBaskets(baskets: Int) {

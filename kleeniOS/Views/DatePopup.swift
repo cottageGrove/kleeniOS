@@ -62,12 +62,12 @@ class DatePopup: UIView {
         lowerButton?.translatesAutoresizingMaskIntoConstraints = false
         
         upperButton?.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -30).isActive = true
-        upperButton?.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        upperButton?.topAnchor.constraint(equalTo: self.topAnchor, constant: 15).isActive = true
         upperButton?.widthAnchor.constraint(equalToConstant: 50).isActive = true
         upperButton?.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         lowerButton?.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -30).isActive = true
-        lowerButton?.topAnchor.constraint(equalTo: upperButton!.bottomAnchor, constant: 30).isActive = true
+        lowerButton?.topAnchor.constraint(equalTo: upperButton!.bottomAnchor, constant: 35).isActive = true
         lowerButton?.widthAnchor.constraint(equalToConstant: 50).isActive = true
         lowerButton?.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
@@ -85,21 +85,28 @@ class DatePopup: UIView {
         dropoffLabel = UILabel(frame: rect)
         pickupHeaderLabel?.text = "Pickup"
         dropoffHeaderLabel?.text = "Dropoff"
-        
+        pickupLabel?.text = "date not selected"
+        dropoffLabel?.text = "date not selected"
 //        pickupHeaderLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
 //        dropoffHeaderLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         
         pickupHeaderLabel?.font = UIFont(name: "San Francisco", size: 16)
-        pickupHeaderLabel?.textColor = #colorLiteral(red: 0.4439296126, green: 0.4412950277, blue: 0.4459576011, alpha: 1)
+        pickupHeaderLabel?.textColor = #colorLiteral(red: 0.5481344461, green: 0.5482298732, blue: 0.5481218696, alpha: 1)
+        pickupHeaderLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        
         
         dropoffHeaderLabel?.font = UIFont(name: "San Francisco", size: 16)
-        dropoffHeaderLabel?.textColor = #colorLiteral(red: 0.4439296126, green: 0.4412950277, blue: 0.4459576011, alpha: 1)
+        dropoffHeaderLabel?.textColor = #colorLiteral(red: 0.5481344461, green: 0.5482298732, blue: 0.5481218696, alpha: 1)
+        dropoffHeaderLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        
         
         pickupLabel?.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        pickupLabel?.textColor = #colorLiteral(red: 0.5481344461, green: 0.5482298732, blue: 0.5481218696, alpha: 1)
         dropoffLabel?.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        dropoffLabel?.textColor = #colorLiteral(red: 0.5481344461, green: 0.5482298732, blue: 0.5481218696, alpha: 1)
         
-        pickupLabel?.textAlignment = .center
-        dropoffLabel?.textAlignment = .center
+//        pickupLabel?.textAlignment = .center
+//        dropoffLabel?.textAlignment = .center
         
         self.addSubview(pickupHeaderLabel!)
         self.addSubview(dropoffHeaderLabel!)
@@ -109,29 +116,29 @@ class DatePopup: UIView {
         
         pickupHeaderLabel?.translatesAutoresizingMaskIntoConstraints = false
         pickupHeaderLabel?.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        pickupHeaderLabel?.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        pickupHeaderLabel?.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        pickupHeaderLabel?.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        pickupHeaderLabel?.topAnchor.constraint(equalTo: self.topAnchor, constant: 23).isActive = true
         pickupHeaderLabel?.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 42).isActive = true
         
         pickupLabel?.translatesAutoresizingMaskIntoConstraints = false
         pickupLabel?.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        pickupLabel?.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        pickupLabel?.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
+        pickupLabel?.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        pickupLabel?.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 42).isActive = true
 //        pickupLabel?.rightAnchor.constraint(equalTo: self.upperButton!.leftAnchor, constant: 0).isActive = true
-        pickupLabel?.topAnchor.constraint(equalTo: self.topAnchor, constant: 12).isActive = true
+        pickupLabel?.topAnchor.constraint(equalTo: self.pickupHeaderLabel!.bottomAnchor, constant: 5).isActive = true
         
         dropoffHeaderLabel?.translatesAutoresizingMaskIntoConstraints = false
         dropoffHeaderLabel?.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        dropoffHeaderLabel?.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        dropoffHeaderLabel?.topAnchor.constraint(equalTo: self.pickupHeaderLabel!.bottomAnchor, constant: 30).isActive = true
+        dropoffHeaderLabel?.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        dropoffHeaderLabel?.topAnchor.constraint(equalTo: self.topAnchor, constant: 103).isActive = true
         dropoffHeaderLabel?.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 42).isActive = true
         
         dropoffLabel?.translatesAutoresizingMaskIntoConstraints = false
         dropoffLabel?.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        dropoffLabel?.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        dropoffLabel?.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0).isActive = true
+        dropoffLabel?.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        dropoffLabel?.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 42).isActive = true
 //        dropoffLabel?.rightAnchor.constraint(equalTo: self.lowerButton!.leftAnchor, constant: 0).isActive = true
-        dropoffLabel?.topAnchor.constraint(equalTo: self.upperButton!.bottomAnchor, constant: 32).isActive = true
+        dropoffLabel?.topAnchor.constraint(equalTo: self.dropoffHeaderLabel!.bottomAnchor, constant: 5).isActive = true
         
         
     }

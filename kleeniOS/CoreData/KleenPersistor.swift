@@ -55,10 +55,10 @@ class KleenPersistor {
         //storing the laundry Managed Object
         guard let baskets = laundry.baskets else {return}
         guard let detergentType = laundry.detergent else {return}
-        guard let laundryType = laundry.laundryType else {return}
+        guard let laundryType = laundry.washType else {return}
         laundryMO?.baskets = Int16(baskets)
         laundryMO?.detergent = detergentType
-        laundryMO?.laundryType = laundry.laundryType
+        laundryMO?.laundryType = laundry.washType
 
         //assign laundryMO to orderMO.laundryModel
         
@@ -89,9 +89,9 @@ class KleenPersistor {
             
             for order in items {
                 let orderMO = order
-                print(orderMO.datePlaced)
-                print(orderMO.dropoffDate)
-                print(orderMO.dropoffDay)
+//                print(orderMO.datePlaced)
+//                print(orderMO.dropoffDate)
+//                print(orderMO.dropoffDay)
             }
             return items
             

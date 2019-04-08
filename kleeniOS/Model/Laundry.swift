@@ -10,33 +10,35 @@ import Foundation
 
 class Laundry {
     
-    private var id: String?
-    private var laundryId: Int?
+    var id: String?
     var baskets: Int?
     var detergent: String?
-    var laundryType: String?
+    var washType: String?
     private var orderId: Int?
+    
+    
+    //Default initializer without any paramaters
+    init() {}
 
-    init(id: String?, laundryId: Int?, baskets: Int?, detergent: String?, laundryType: String?, orderId: Int?) {
+    init(id: String?, baskets: Int?, detergent: String?, laundryType: String?, orderId: Int?) {
         self.id = id
-        self.laundryId = laundryId
         self.baskets = baskets
         self.detergent = detergent
-        self.laundryType = laundryType
+        self.washType = laundryType
         self.orderId = orderId
     }
     
     init(baskets: Int?, detergent: String?, laundryType: String?) {
         self.baskets = baskets
         self.detergent = detergent
-        self.laundryType = laundryType
+        self.washType = laundryType
 
     }
     
     private func updateLaundryOrder(detergent: String?, baskets: Int?, laundryType: String?, orderId: Int?) {
         self.detergent = detergent
         self.baskets = baskets
-        self.laundryType = laundryType
+        self.washType = laundryType
         self.orderId = orderId
     }
     

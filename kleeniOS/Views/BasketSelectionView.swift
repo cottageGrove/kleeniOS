@@ -47,13 +47,15 @@ class BasketSelectionView: UIView {
         //initialize label
         let rect = CGRect(x: 0, y: 0, width: 300, height: 50)
         basketLabel = UILabel(frame: rect)
-        basketLabel?.font = UIFont(name: "San Francisco", size: 16)
-        basketLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+
+
 
         self.addSubview(basketLabel!)
         basketLabel?.translatesAutoresizingMaskIntoConstraints = false
         basketLabel?.text = "Select Baskets"
-        basketLabel?.textColor = #colorLiteral(red: 0.4439296126, green: 0.4412950277, blue: 0.4459576011, alpha: 1)
+        basketLabel?.textColor = #colorLiteral(red: 0.5481344461, green: 0.5482298732, blue: 0.5481218696, alpha: 1)
+        basketLabel?.font = UIFont(name: "San Francisco", size: 16)
+        basketLabel?.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         self.backgroundColor = .white
         
         self.layer.borderWidth = 0.3
@@ -170,7 +172,7 @@ class BasketSelectionView: UIView {
                 
                 self.delegate?.didSelectBasket(basketTotal: total)
                 self.basketLabel?.text = "Select Baskets"
-                self.basketLabel?.textColor = .black
+                self.basketLabel?.textColor = #colorLiteral(red: 0.5481344461, green: 0.5482298732, blue: 0.5481218696, alpha: 1)
             }
             else {
                 print("Sorry cannot exceed 4 baskets")
@@ -198,6 +200,7 @@ class BasketSelectionView: UIView {
                 self.basketLabel?.text = "Please Select Baskets"
                 self.basketLabel?.textColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
                 
+                self.delegate?.didSelectBasket(basketTotal: 0)
             }
             
             

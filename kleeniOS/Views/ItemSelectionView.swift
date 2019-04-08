@@ -27,6 +27,14 @@ protocol SelectionDelegate {
     
     //Selected the checkout button in the footer view
     func onCheckout(sender: UIView)
+    
+    func draggedUp(cView : UIView)
+    func draggedDown(cView: UIView)
+    func proceedToCheckout(proceedButton: UIButton)
+}
+
+protocol RefreshDelegate {
+    func onSignOut()
 }
 
 class ItemSelectionView: UIView {
@@ -88,8 +96,8 @@ class ItemSelectionView: UIView {
         self.addSubview(detergentViewLabel!)
         detergentViewLabel?.translatesAutoresizingMaskIntoConstraints = false
         detergentViewLabel?.text = "Select Detergent"
-        detergentViewLabel?.textColor = .black
-        detergentViewLabel?.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        detergentViewLabel?.textColor = #colorLiteral(red: 0.1146534458, green: 0.1146802977, blue: 0.1146499142, alpha: 1)
+        detergentViewLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
 
         
         setupDetergentLabelConstraints()
