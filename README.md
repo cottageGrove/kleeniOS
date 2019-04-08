@@ -4,7 +4,7 @@ An iOS application that demonstrates working implementations of the iOS SDK - Au
 To install podfile run command in terminal 
 
 pod install 
-
+!(/Screenshot.png)
 <div align="center">
     <img src="/Screenshot.png" width="400px"</img> 
     <img src="/Screenshot2.png" width="400px"</img>
