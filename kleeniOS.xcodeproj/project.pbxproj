@@ -24,11 +24,8 @@
 		B43BF4102208D7A700EE9405 /* ItemSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43BF40F2208D7A700EE9405 /* ItemSelectionView.swift */; };
 		B44FCE8D225653CE005074E1 /* SummaryPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44FCE8C225653CE005074E1 /* SummaryPopup.swift */; };
 		B44FCE8F2257B80E005074E1 /* PaymentPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44FCE8E2257B80E005074E1 /* PaymentPopup.swift */; };
+		B44FCE91225AEBDA005074E1 /* Screenshot5.png in Resources */ = {isa = PBXBuildFile; fileRef = B44FCE90225AEBD9005074E1 /* Screenshot5.png */; };
 		B4604D0C224812F900211E39 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4604D0B224812F900211E39 /* FooterView.swift */; };
-		B4604D122249AE0300211E39 /* Screenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = B4604D112249AE0300211E39 /* Screenshot.png */; };
-		B4604D142249AFF000211E39 /* Screenshot2.png in Resources */ = {isa = PBXBuildFile; fileRef = B4604D132249AFF000211E39 /* Screenshot2.png */; };
-		B4604D162249B07500211E39 /* Screenshot3.png in Resources */ = {isa = PBXBuildFile; fileRef = B4604D152249B07500211E39 /* Screenshot3.png */; };
-		B4604D1D2249B51A00211E39 /* Screenshot4.png in Resources */ = {isa = PBXBuildFile; fileRef = B4604D1C2249B51A00211E39 /* Screenshot4.png */; };
 		B46CE3852254DFE200E607CE /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CE3842254DFE200E607CE /* SignUpViewController.swift */; };
 		B46CE3872254E40E00E607CE /* ConfirmSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CE3862254E40E00E607CE /* ConfirmSignUpViewController.swift */; };
 		B46F222A223D4E0F005EB46A /* CollapsibleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F2229223D4E0F005EB46A /* CollapsibleTableViewCell.swift */; };
@@ -77,11 +74,8 @@
 		B43BF40F2208D7A700EE9405 /* ItemSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSelectionView.swift; sourceTree = "<group>"; };
 		B44FCE8C225653CE005074E1 /* SummaryPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryPopup.swift; sourceTree = "<group>"; };
 		B44FCE8E2257B80E005074E1 /* PaymentPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentPopup.swift; sourceTree = "<group>"; };
+		B44FCE90225AEBD9005074E1 /* Screenshot5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Screenshot5.png; sourceTree = "<group>"; };
 		B4604D0B224812F900211E39 /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
-		B4604D112249AE0300211E39 /* Screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Screenshot.png; sourceTree = "<group>"; };
-		B4604D132249AFF000211E39 /* Screenshot2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Screenshot2.png; sourceTree = "<group>"; };
-		B4604D152249B07500211E39 /* Screenshot3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Screenshot3.png; sourceTree = "<group>"; };
-		B4604D1C2249B51A00211E39 /* Screenshot4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Screenshot4.png; sourceTree = "<group>"; };
 		B46CE3842254DFE200E607CE /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		B46CE3862254E40E00E607CE /* ConfirmSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmSignUpViewController.swift; sourceTree = "<group>"; };
 		B46F2229223D4E0F005EB46A /* CollapsibleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleTableViewCell.swift; sourceTree = "<group>"; };
@@ -192,10 +186,7 @@
 		B43BF3F12208D77F00EE9405 = {
 			isa = PBXGroup;
 			children = (
-				B4604D112249AE0300211E39 /* Screenshot.png */,
-				B4604D132249AFF000211E39 /* Screenshot2.png */,
-				B4604D152249B07500211E39 /* Screenshot3.png */,
-				B4604D1C2249B51A00211E39 /* Screenshot4.png */,
+				B44FCE90225AEBD9005074E1 /* Screenshot5.png */,
 				B43BF3FC2208D77F00EE9405 /* kleeniOS */,
 				B43BF3FB2208D77F00EE9405 /* Products */,
 				BA33A4907A43D1E5A6DF2E68 /* Pods */,
@@ -363,14 +354,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B43BF4082208D78100EE9405 /* LaunchScreen.storyboard in Resources */,
-				B4604D1D2249B51A00211E39 /* Screenshot4.png in Resources */,
-				B4604D122249AE0300211E39 /* Screenshot.png in Resources */,
-				B4604D142249AFF000211E39 /* Screenshot2.png in Resources */,
 				B43BF4052208D78100EE9405 /* Assets.xcassets in Resources */,
 				B422BE662253A763004B2155 /* awsconfiguration.json in Resources */,
 				B40E0C5A224AE369003B2629 /* Main.storyboard in Resources */,
 				B4B4EF812237F22200894A15 /* OrderCell.xib in Resources */,
-				B4604D162249B07500211E39 /* Screenshot3.png in Resources */,
+				B44FCE91225AEBDA005074E1 /* Screenshot5.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
