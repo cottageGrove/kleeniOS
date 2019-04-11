@@ -1,7 +1,9 @@
-
 //
-//  Created by Rafae on 2018-11-19.
-//  Copyright © 2018 Rafae. All rights reserved.
+//  TimePickerPopup.swift
+//  kleeniOS
+//
+//  Created by Rafae on 2019-04-08.
+//  Copyright © 2019 Rafae. All rights reserved.
 //
 
 import Foundation
@@ -15,7 +17,7 @@ import UIKit
 //
 //}
 
-class PaymentPopup: UIView {
+class TimePickerPopup: UIView {
     
     //    var order: Order? {
     ////        didSet {
@@ -35,8 +37,13 @@ class PaymentPopup: UIView {
     var widthConstraint : NSLayoutConstraint?
     var heightConstraint: NSLayoutConstraint?
     var leftAnchorConstraint : NSLayoutConstraint?
+    var hoursPicker: UIPickerView?
+    var minutesPicker: UIPickerView?
     
     
+    var timePicker: TimePicker?
+    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -44,8 +51,7 @@ class PaymentPopup: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.addBlurEffect()
-//        self.backgroundColor = #colorLiteral(red: 0.9876714349, green: 0.9878364205, blue: 0.987649858, alpha: 1)
+        self.backgroundColor = #colorLiteral(red: 0.9876714349, green: 0.9878364205, blue: 0.987649858, alpha: 1)
         self.layer.cornerRadius = 15
         self.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         self.layer.borderWidth = 0.2
@@ -55,24 +61,13 @@ class PaymentPopup: UIView {
         self.layer.shadowRadius = 2.5
         self.layer.masksToBounds = false
         
-        
-        setupCheckoutViewConstraints()
-        setupLabel()
+//        setupCheckoutViewConstraints()
+//        setupLabel()
+        setupTimePicker()
         
         let pan = UIPanGestureRecognizer(target: self, action: #selector(self.dragCheckoutGestureHandler(panGesture:)))
         self.addGestureRecognizer(pan)
         
-    }
-    
-    func addBlurEffect() {
-        self.backgroundColor = .clear
-        let blurEffect = UIBlurEffect(style: .extraLight)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        //always fill the view
-        blurEffectView.frame = self.bounds
-        
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.addSubview(blurEffectView)
     }
     
     func getDryingText() {
@@ -80,13 +75,30 @@ class PaymentPopup: UIView {
         
     }
     
+    func setupTimePicker() {
+
+        let screenSize = UIScreen.main.bounds
+        let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
+
+        let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
+        timePicker = TimePicker(frame: rect)
+        timePicker?.modelData = ["9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8"]
+        
+        timePicker?.title = "Hours"
+        
+        hoursPicker?.delegate = timePicker
+        minutesPicker?.delegate = timePicker
+        //        timePicker?.countDownDuration = TimeInterval(
+
+    }
     
     func setupLabel() {
         
         //create checkout title Label
         let rectLabel = CGRect(x: 0, y: 0, width: 300, height: 30)
         let checkoutLabel = UILabel(frame: rectLabel)
-        checkoutLabel.text = "Thanks for Placing an Order"
+        checkoutLabel.text = "Checkout Baskets"
         checkoutLabel.font = UIFont(name: "Avenir-Black", size: 30)
         checkoutLabel.font = UIFont.boldSystemFont(ofSize: 26)
         
@@ -98,18 +110,19 @@ class PaymentPopup: UIView {
         checkoutLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         
         let proceedButton = UIButton(frame: rectLabel)
-        proceedButton.setTitle("View Order Details", for: .normal)
+        proceedButton.setTitle("Proceed to Checkout", for: .normal)
         proceedButton.title(for: .normal)
         proceedButton.setTitleColor(#colorLiteral(red: 0.003173338249, green: 0.4873039126, blue: 0.9982392192, alpha: 1), for: .normal)
-
+        
         self.addSubview(proceedButton)
         proceedButton.translatesAutoresizingMaskIntoConstraints = false
         proceedButton.topAnchor.constraint(equalTo: checkoutLabel.bottomAnchor, constant: 0).isActive = true
         proceedButton.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         proceedButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
         proceedButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-
+        
         proceedButton.addTarget(self, action: #selector(onProceedTap(sender:)), for: UIControl.Event.touchUpInside)
+        //        button.addTarget(self, action: #selector(buttonTapped(sender:)), for: UIControl.Event.touchUpInside)
     }
     
     @objc private func onProceedTap(sender selectedButton: UIButton) {
@@ -155,7 +168,6 @@ class PaymentPopup: UIView {
                 self.delegate?.draggedUp(cView: self)
             }
         }
-        
     }
     
     
@@ -164,3 +176,4 @@ class PaymentPopup: UIView {
     
     
 }
+

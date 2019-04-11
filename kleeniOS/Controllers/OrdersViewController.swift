@@ -95,15 +95,20 @@ class OrdersViewController: UITableViewController {
         
 //        self.refresh()
         
+//        if let username = user!.username {
+//            print("Username: \(username)")
+//
+//
+//
+//        }
         let username = user!.username!
-        
-        print("Username: \(username)")
         
         
         //TODO:- requires a fix
         pegasusAPI.findUser(username: username) { (user, orders) in
             self.orders = orders
         }
+        
         
         self.tableView.reloadData()
         self.updateOrdersTable()

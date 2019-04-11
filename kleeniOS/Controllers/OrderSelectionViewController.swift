@@ -46,7 +46,11 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
     var toggleView : ToggleView?
     var summaryPopup: SummaryPopup?
     var footerView: FooterView?
-    var timePicker: UIDatePicker?
+    var hoursPicker: UIPickerView?
+    var minutesPicker: UIPickerView?
+    
+    var hoursTimePicker: TimePicker?
+    var minutesTimePicker: TimePicker?
     
     //Constraints for autolayout manipulation
     var checkoutBarButtonItem: UIBarButtonItem?
@@ -79,7 +83,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 //
-
+        
         
 //        pegasusAPI.createUser(username: "roofoi") { (userID) in
 //            print("User id returned \(userID)")
@@ -95,7 +99,6 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
         self.refresh()
         
         let username = user!.username!
-        
         pegasusAPI.findUser(username: username) { (user, orders) in
             print(user.firstName ?? "nil")
             print(user.lastName ?? "nil")
@@ -115,6 +118,11 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
             
         }
         
+//        if let username = user!.username {
+//
+//        }
+
+        
 //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
 //        appSyncClient = appDelegate.appSyncClient
 //        
@@ -132,6 +140,9 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
         setupLaundrySelectionView()
         setupBarItems()
         setupSummaryPopup()
+
+        setupPickerConstraints()
+        setupTimePicker()
 
         detergentSelectionView?.delegate = self
         basketSelectionView?.delegate = self
@@ -219,6 +230,88 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
 
     }
     
+    func setupPickerConstraints() {
+        let screenSize = UIScreen.main.bounds
+        let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
+        
+        let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
+        let pickerContainer = UIView(frame: rect)
+
+        self.hoursPicker = UIPickerView(frame: rect)
+        self.minutesPicker = UIPickerView(frame:rect)
+        self.contentView!.addSubview(pickerContainer)
+        pickerContainer.translatesAutoresizingMaskIntoConstraints = false
+        pickerContainer.bottomAnchor.constraint(equalTo: footerView!.topAnchor, constant: -30).isActive = true
+        pickerContainer.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
+        pickerContainer.heightAnchor.constraint(equalToConstant: 140).isActive = true
+        
+        
+        let dividerLabel = UILabel(frame: rect)
+        
+        pickerContainer.addSubview(dividerLabel)
+        
+        dividerLabel.translatesAutoresizingMaskIntoConstraints = false
+        dividerLabel.text = ":"
+        dividerLabel.font = UIFont.systemFont(ofSize: 30, weight: .light)
+        dividerLabel.textAlignment = .center
+        
+        dividerLabel.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        dividerLabel.heightAnchor.constraint(equalToConstant: 130).isActive = true
+        dividerLabel.centerXAnchor.constraint(equalTo: pickerContainer.centerXAnchor).isActive = true
+
+        
+        pickerContainer.addSubview(self.hoursPicker!)
+        
+
+        self.hoursPicker?.translatesAutoresizingMaskIntoConstraints = false
+
+        self.hoursPicker?.rightAnchor.constraint(equalTo: dividerLabel.leftAnchor, constant: -10).isActive = true
+        self.hoursPicker?.widthAnchor.constraint(equalToConstant: 130).isActive = true
+        self.hoursPicker?.heightAnchor.constraint(equalToConstant: 130).isActive = true
+        
+
+//        self.view.sendSubviewToBack(self.hoursPicker!)
+        
+        
+
+        pickerContainer.addSubview(self.minutesPicker!)
+        
+        self.minutesPicker?.translatesAutoresizingMaskIntoConstraints = false
+        self.minutesPicker?.leftAnchor.constraint(equalTo: dividerLabel.rightAnchor, constant: 10).isActive = true
+        self.minutesPicker?.widthAnchor.constraint(equalToConstant: 130).isActive = true
+        self.minutesPicker?.heightAnchor.constraint(equalToConstant: 130).isActive = true
+        
+
+        self.contentView?.sendSubviewToBack(pickerContainer)
+        
+        
+        
+    }
+    
+    func setupTimePicker() {
+        
+
+        
+        hoursTimePicker = TimePicker()
+        hoursTimePicker?.modelData = ["9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8"]
+        hoursPicker?.delegate = hoursTimePicker
+        hoursPicker?.dataSource = hoursTimePicker
+        hoursTimePicker?.title = "Hours"
+        
+        
+        minutesTimePicker = TimePicker()
+        minutesTimePicker?.modelData = ["00", "15", "30", "45"]
+        minutesPicker?.delegate = minutesTimePicker
+        minutesTimePicker?.dataSource = minutesTimePicker
+        minutesTimePicker?.title = "Hours"
+        
+        
+        //        timePicker?.countDownDuration = TimeInterval(
+        
+        
+    }
+    
     func showPreviousOrder(sender: UIView) {
 //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
 //        let managedObjectContext = appDelegate.persistentContainer.viewContext
@@ -271,10 +364,10 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
         datePopupView?.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
         datePopupView?.heightAnchor.constraint(equalToConstant: 167).isActive = true
 //        datePopupView?.topAnchor.constraint(equalTo: self.toggleView!.bottomAnchor).isActive = true
-//        datePopupView?.topAnchor.constraint(equalTo: self.toggleView!.bottomAnchor, constant: 10).isActive = true
+        datePopupView?.topAnchor.constraint(equalTo: self.toggleView!.bottomAnchor, constant: 20).isActive = true
         
 //        datePopupView?.bottomAnchor.constraint(equalTo: self.footerView!.topAnchor).isActive = true
-        datePopupView?.bottomAnchor.constraint(equalTo: self.contentView!.bottomAnchor, constant: -100).isActive = true
+//        datePopupView?.topAnchor.constraint(equalTo: self.toggle!.bottomAnchor, constant: -100).isActive = true
         datePopupView?.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
     }
     
@@ -485,31 +578,8 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
         setupToggleViewConstraint()
         
         //TODO may need to change the way this is
-//        setupTimePicker()
         setupCalendarPopupView()
         setupFooterView()
-        
-    }
-    
-    func setupTimePicker() {
-        
-        let screenSize = UIScreen.main.bounds
-        let screenWidth = screenSize.width
-        let screenHeight = screenSize.height
-    
-        let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
-        timePicker = UIDatePicker(frame: rect)
-        timePicker?.datePickerMode = .countDownTimer
-        timePicker?.minuteInterval = 15
-        
-        self.contentView?.addSubview(timePicker!)
-        timePicker?.translatesAutoresizingMaskIntoConstraints = false
-        timePicker?.topAnchor.constraint(equalTo: self.toggleView!.bottomAnchor, constant: 20).isActive = true
-        timePicker?.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
-        timePicker?.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        
-//        timePicker?.countDownDuration = TimeInterval(
-        
         
     }
     
@@ -766,12 +836,14 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
     func draggedUp(cView: UIView) {
         print("did drag summaryPopup up")
         
+        //SummaryPopupTopConstraint
         summaryPopupTopConstraint?.isActive = false
         summaryPopupTopConstraint?.constant = -200
         summaryPopupTopConstraint?.isActive = true
         
         //Need to call this otherwise the constraints will not update for the subviews
         self.view.setNeedsLayout()
+        
         
         UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [.curveEaseIn, .allowUserInteraction], animations: {
             self.view.layoutIfNeeded()
@@ -781,6 +853,8 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
     }
     
     func draggedDown(cView: UIView) {
+        
+        //SummaryPopupTopConstraint 
         summaryPopupTopConstraint?.isActive = true
         summaryPopupTopConstraint?.constant = 0
         summaryPopupTopConstraint?.isActive = true

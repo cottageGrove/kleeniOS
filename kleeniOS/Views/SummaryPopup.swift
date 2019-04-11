@@ -46,7 +46,10 @@ class SummaryPopup: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = #colorLiteral(red: 0.9876714349, green: 0.9878364205, blue: 0.987649858, alpha: 1)
+
+        
+        self.addBlurEffect()
+    
         self.layer.cornerRadius = 15
         self.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         self.layer.borderWidth = 0.2
@@ -63,7 +66,19 @@ class SummaryPopup: UIView {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(self.dragCheckoutGestureHandler(panGesture:)))
         self.addGestureRecognizer(pan)
     
+    } 
+    
+    func addBlurEffect() {
+        self.backgroundColor = .clear
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        //always fill the view
+        blurEffectView.frame = self.bounds
+        
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.addSubview(blurEffectView)
     }
+    
     
     func getDryingText() {
         print("Drying text has been set: it is returning... ", self.dryingText.text)

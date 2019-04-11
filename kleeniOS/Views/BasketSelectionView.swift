@@ -56,10 +56,10 @@ class BasketSelectionView: UIView {
         basketLabel?.textColor = #colorLiteral(red: 0.5481344461, green: 0.5482298732, blue: 0.5481218696, alpha: 1)
         basketLabel?.font = UIFont(name: "San Francisco", size: 16)
         basketLabel?.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
-        self.backgroundColor = .white
+//        self.backgroundColor = .white
         
-        self.layer.borderWidth = 0.3
-        self.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+//        self.layer.borderWidth = 0.3
+//        self.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         
         
         setupBasketLabelConstraints()
@@ -99,6 +99,8 @@ class BasketSelectionView: UIView {
         basketLabel?.font = UIFont(name: "San Francisco", size: 30)
         basketTotalLabel?.textAlignment = .center
         basketTotalLabel?.text = "0"
+        
+        basketTotalLabel?.font = UIFont.systemFont(ofSize: 30, weight: .regular)
         
     }
     
