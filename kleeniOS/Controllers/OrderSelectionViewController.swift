@@ -41,10 +41,12 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
     var backgroundView : UIView?
     var checkoutView: CheckoutView?
     var datePopupView: DatePopup?
+    
 
     var basketSelectionView : BasketSelectionView?
     var toggleView : ToggleView?
     var summaryPopup: SummaryPopup?
+    var currentOrderPopup: CurrentOrderPopup?
     var footerView: FooterView?
     var hoursPicker: UIPickerView?
     var minutesPicker: UIPickerView?
@@ -58,6 +60,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
     var detergentSelectionHeightConstraint: NSLayoutConstraint?
     var checkoutViewHeightConstraint: NSLayoutConstraint?
     var summaryPopupTopConstraint: NSLayoutConstraint?
+    var currentOrderPopupHeightConstraint: NSLayoutConstraint?
     
     var imageView : UIImageView?
     
@@ -67,7 +70,6 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
     //Field Variable O
     var laundry : Laundry?
     var order:  Order?
-    
     //CheckoutView Controller declaration
     let checkoutVC = CheckoutViewController()
     
@@ -98,25 +100,29 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
         
         self.refresh()
         
-        let username = user!.username!
-        pegasusAPI.findUser(username: username) { (user, orders) in
-            print(user.firstName ?? "nil")
-            print(user.lastName ?? "nil")
-            print(user.username  ?? "nil")
-            
-            guard let unwrappedOrders = orders else {return}
-            
-            for order in unwrappedOrders {
-                print(order.cost  ?? "nil")
-                print(order.pickupDate ?? "nil")
-                print(order.dropoffDate  ?? "nil")
-                print(order.id ?? "nil")
+        if let username = user!.username {
+            pegasusAPI.findUser(username: username) { (user, orders) in
+                print(user.firstName ?? "nil")
+                print(user.lastName ?? "nil")
+                print(user.username  ?? "nil")
                 
-                print(order.laundry?.baskets ?? "nil")
-                print(order.laundry?.detergent ?? "detergent")
+                guard let unwrappedOrders = orders else {return}
+                
+                for order in unwrappedOrders {
+                    print(order.cost  ?? "nil")
+                    print(order.pickupDate ?? "nil")
+                    print(order.dropoffDate  ?? "nil")
+                    print(order.id ?? "nil")
+                    
+                    print(order.laundry?.baskets ?? "nil")
+                    print(order.laundry?.detergent ?? "detergent")
+                }
+                
             }
             
         }
+//        let username = user!.username!
+
         
 //        if let username = user!.username {
 //
@@ -140,6 +146,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
         setupLaundrySelectionView()
         setupBarItems()
         setupSummaryPopup()
+        setupCurrentOrderPopup()
 
         setupPickerConstraints()
         setupTimePicker()
@@ -150,6 +157,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
         datePopupView?.delegate = self
         summaryPopup?.delegate = self
         footerView?.delegate = self
+        currentOrderPopup?.delegate = self
         
         //might have to clean this up
         toggleView?.foldRadioView?.delegate = self
@@ -171,6 +179,27 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
     }
     
 
+    func setupCurrentOrderPopup(){
+        
+        
+        print("ON Payment!")
+        
+        let screenSize = UIScreen.main.bounds
+        let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
+        
+        self.currentOrderPopup = CurrentOrderPopup()
+        self.view.addSubview(currentOrderPopup!)
+        currentOrderPopup?.translatesAutoresizingMaskIntoConstraints = false
+        
+        currentOrderPopup?.topAnchor.constraint(equalTo: self.scrollView!.bottomAnchor, constant: 0).isActive = true
+        currentOrderPopup?.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
+        currentOrderPopup?.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        currentOrderPopupHeightConstraint = NSLayoutConstraint(item: self.currentOrderPopup!, attribute: .top, relatedBy: .equal, toItem: self.scrollView, attribute: .bottom, multiplier: 1, constant: 0)
+        
+        self.view.addConstraint(currentOrderPopupHeightConstraint!)
+        
+    }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard let navBar = self.navigationController?.navigationBar else {return}
 
@@ -702,7 +731,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
     
     func setupDetergentSelectionViewConstraints() {
         detergentSelectionView?.translatesAutoresizingMaskIntoConstraints = false
-        detergentSelectionView?.topAnchor.constraint(equalTo: self.contentView!.topAnchor, constant: 10).isActive = true
+        detergentSelectionView?.topAnchor.constraint(equalTo: self.contentView!.topAnchor, constant: 0).isActive = true
         detergentSelectionView?.centerXAnchor.constraint(equalTo: self.contentView!.centerXAnchor).isActive = true
         detergentSelectionView?.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
         
@@ -719,7 +748,6 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
 //        basketSelectionView?.topAnchor.constraint(equalTo: self.view.topAnchor, constant: heightConstant!).isActive = true
         
         basketSelectionView?.layoutSubviews()
-        
         basketSelectionView?.topAnchor.constraint(equalTo: detergentSelectionView!.bottomAnchor, constant: 20).isActive = true
 
         basketSelectionView?.centerXAnchor.constraint(equalTo: self.contentView!.centerXAnchor).isActive = true
@@ -735,8 +763,6 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
         
         //Make sure t
         detergentSelectionHeightConstraint = NSLayoutConstraint(item: detergentSelectionView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 320)
-
-
         self.view.addConstraint(detergentSelectionHeightConstraint!)
     }
     
@@ -809,8 +835,6 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
             imageView?.tintColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
             checkoutBarButtonItem?.isEnabled = false
         }
-        
-        
         
     }
     
@@ -983,10 +1007,7 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
         return false
 
     }
-    
-    
-    
-    
+
     
     //TODO:- Needs to be refactored
     func selectPickupDate(sender: UIView) {
@@ -1230,6 +1251,17 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
         
     }
     
+    func onPaymentSuccess(order: Order) {
+        
+        print("CurrentOrderPopup has been loaded")
+        
+        currentOrderPopupHeightConstraint?.constant = 100
+        
+        UIView.animate(withDuration: 0.5, delay: 1, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [.curveEaseIn, .allowUserInteraction], animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
     func proceedToCheckout(proceedButton: UIButton) {
         print("TODO Checkout!")
         
@@ -1250,7 +1282,11 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
             self.view.layoutIfNeeded()
         }, completion: nil)
         
-
+    }
+    
+    func signingOut() {
+        self.navigationController?.popToRootViewController(animated: true)
+        self.checkoutVC.paymentPopupTopConstraint?.constant = 0
     }
     
     //Return the day of the week
@@ -1278,4 +1314,6 @@ enum Days: String, CaseIterable {
     case sunday = "Sunday"
     
 }
+
+
 

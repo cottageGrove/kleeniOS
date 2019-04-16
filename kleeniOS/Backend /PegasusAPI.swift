@@ -23,7 +23,7 @@ class PegasusAPI {
     
     
     
-    var user: User?
+    var user = User()
     var orders = [Order]()
     var laundry: Laundry?
     var laundryID: GraphQLID?
@@ -52,6 +52,31 @@ class PegasusAPI {
         
     }
     
+    func retrieveUserDetails(username: String, completionHandler: @escaping (User)->()) {
+        let usernameFilterInput = ModelStringFilterInput(ne: nil, eq: username, le: nil, lt: nil, ge: nil, gt: nil, contains: nil, notContains: nil, between: nil, beginsWith: nil)
+        let modelUserFilterInput = ModelUserFilterInput(id: nil, username: usernameFilterInput, loginDate: nil, firstname: nil, lastname: nil, and: nil, or: nil, not: nil)
+        let listUsersQuery = ListUsersQuery(filter: modelUserFilterInput, limit: nil, nextToken: nil)
+        
+        
+        appSyncClient.fetch(query: listUsersQuery, cachePolicy: .fetchIgnoringCacheData, queue: .main) { (result, error) in
+            if error != nil {
+                print(error?.localizedDescription ?? "")
+                return
+            }
+            result?.data?.listUsers?.items?.forEach({ (user) in
+                self.user.username = user?.username
+                self.user.firstName = user?.firstname
+                self.user.lastName = user?.lastname
+                self.user.id = user?.id
+                
+            })
+            completionHandler(self.user)
+            
+        }
+    }
+    
+    
+    
     //using a completionHandler that returns both the User and the Orders
     func findUser(username: String, completionHandler: @escaping (User, [Order]?)->()) {
         
@@ -71,11 +96,10 @@ class PegasusAPI {
             var orders = [Order]()
             
             result?.data?.listUsers?.items?.forEach({ (user) in
-                self.user?.username = user?.username
-                self.user?.firstName = user?.firstname
-                self.user?.lastName = user?.lastname
-                self.user?.id = user?.id
-                
+                self.user.username = user?.username
+                self.user.firstName = user?.firstname
+                self.user.lastName = user?.lastname
+                self.user.id = user?.id
                 
                 user?.orders?.items?.forEach({ (orderItem) in
                     let order = Order()
@@ -99,11 +123,10 @@ class PegasusAPI {
                     //                    order.datePlaced = orderItem?.
                     
                 })
-                completionHandler(self.user!, orders)
+                
+                completionHandler(self.user, orders)
+                self.sortOrderByDate(orders: orders)
             })
-            
-
-            
         }
         
     }
@@ -126,9 +149,35 @@ class PegasusAPI {
             print("This is your laundry id \(laundryItemID)")
             
             //Have to run within function otherwise the method does not work
-            if let userID = self?.user!.id, let laundryID = laundryItemID {
+            if let userID = self?.user.id, let laundryID = laundryItemID {
                 self?.runOrderMutation(laundryID: laundryID, userID: userID, order: order)
             }
+        }
+    }
+    
+    func placeOrder() {
+        
+    }
+    
+    func sortOrderByDate(orders: [Order]) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE dd-MM"
+        
+        var convertedDates: [Date] = []
+
+        for order in orders {
+            let dropoffDate = order.dropoffDate
+            let date = dateFormatter.date(from: dropoffDate!)
+            convertedDates.append(date!)
+        }
+        
+        let sortedDateResult = convertedDates.sorted(by: >)
+//            convertedDates.sorted(by: {$0.compare($1) == .orderedDescending})
+        
+        print(sortedDateResult)
+        for date in sortedDateResult {
+            let stringDate = dateFormatter.string(from: date)
+            print("This the date \(stringDate)")
         }
         
     }

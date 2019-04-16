@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import AWSCognitoIdentityProvider
 import AWSAppSync
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -43,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 
         self.setupAWSCognito()
+        IQKeyboardManager.shared.enable = true
         
         return true
     }

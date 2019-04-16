@@ -12,6 +12,7 @@
 		B40E0C5A224AE369003B2629 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B40E0C59224AE369003B2629 /* Main.storyboard */; };
 		B40E0C60224AE7C2003B2629 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40E0C5F224AE7C2003B2629 /* UserProfileViewController.swift */; };
 		B40E0C62224AE83A003B2629 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40E0C61224AE83A003B2629 /* User.swift */; };
+		B411047122664D76004766A6 /* CurrentOrderPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B411047022664D76004766A6 /* CurrentOrderPopup.swift */; };
 		B422BE662253A763004B2155 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = B422BE652253A763004B2155 /* awsconfiguration.json */; };
 		B422BE692253A795004B2155 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = B422BE682253A795004B2155 /* API.swift */; };
 		B422BE6C2253AFB5004B2155 /* PegasusAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B422BE6B2253AFB5004B2155 /* PegasusAPI.swift */; };
@@ -62,6 +63,7 @@
 		B40E0C59224AE369003B2629 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		B40E0C5F224AE7C2003B2629 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		B40E0C61224AE83A003B2629 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B411047022664D76004766A6 /* CurrentOrderPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentOrderPopup.swift; sourceTree = "<group>"; };
 		B422BE652253A763004B2155 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = SOURCE_ROOT; };
 		B422BE682253A795004B2155 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = SOURCE_ROOT; };
 		B422BE6B2253AFB5004B2155 /* PegasusAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PegasusAPI.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				B44FCE8E2257B80E005074E1 /* PaymentPopup.swift */,
 				B44FCE92225B9C2A005074E1 /* TimePickerPopup.swift */,
 				B4D2EC72225D19630022803D /* TimePicker.swift */,
+				B411047022664D76004766A6 /* CurrentOrderPopup.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 				B4B4EF572236E11200894A15 /* CoreDataModel.xcdatamodeld in Sources */,
 				B43BF4002208D77F00EE9405 /* OrderSelectionViewController.swift in Sources */,
 				B44FCE8F2257B80E005074E1 /* PaymentPopup.swift in Sources */,
+				B411047122664D76004766A6 /* CurrentOrderPopup.swift in Sources */,
 				B43BF3FE2208D77F00EE9405 /* AppDelegate.swift in Sources */,
 				B49F68CD221086EE009BA425 /* BasketSelectionView.swift in Sources */,
 				B4B4EF7722370EF100894A15 /* OrderModelMO.swift in Sources */,
@@ -598,6 +602,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PVBK5JR278;
 				INFOPLIST_FILE = kleeniOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -605,7 +610,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.raf.UIPracticeApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -617,6 +622,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PVBK5JR278;
 				INFOPLIST_FILE = kleeniOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -624,7 +630,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.raf.UIPracticeApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

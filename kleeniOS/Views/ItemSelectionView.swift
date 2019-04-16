@@ -31,6 +31,7 @@ protocol SelectionDelegate {
     func draggedUp(cView : UIView)
     func draggedDown(cView: UIView)
     func proceedToCheckout(proceedButton: UIButton)
+    func onPaymentSuccess(order: Order)
 }
 
 protocol RefreshDelegate {
@@ -96,8 +97,9 @@ class ItemSelectionView: UIView {
         self.addSubview(detergentViewLabel!)
         detergentViewLabel?.translatesAutoresizingMaskIntoConstraints = false
         detergentViewLabel?.text = "Select Detergent"
-        detergentViewLabel?.textColor = #colorLiteral(red: 0.1146534458, green: 0.1146802977, blue: 0.1146499142, alpha: 1)
-        detergentViewLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        detergentViewLabel?.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        detergentViewLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+
 
         
         setupDetergentLabelConstraints()

@@ -28,10 +28,22 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
         self.pool = AWSCognitoIdentityUserPool.init(forKey: AWSCognitoUserPoolsSignInProviderKey)
         user = User(firstname: nil, lastname: nil, phoneNumber: nil, email: nil, username: nil)
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(sender:)), name:UIResponder.keyboardWillShowNotification, object: nil);
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(sender:)), name:UIResponder.keyboardWillHideNotification, object: nil);
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
+    
+//    @objc func keyboardWillShow(sender: NSNotification) {
+//        self.view.frame.origin.y = -150 // Move view 150 points upward
+//    }
+//
+//    @objc func keyboardWillHide(sender: NSNotification) {
+//        self.view.frame.origin.y = 0 // Move view to original position
+//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let signUpConfirmationViewController = segue.destination as? ConfirmSignUpViewController {
@@ -40,6 +52,8 @@ class SignUpViewController: UIViewController {
             signUpConfirmationViewController.user = self.user
         }
     }
+    
+    
     
     @IBAction func signUp(_ sender: Any) {
         

@@ -101,13 +101,16 @@ class OrdersViewController: UITableViewController {
 //
 //
 //        }
-        let username = user!.username!
         
+//        let username = user!.username!
         
-        //TODO:- requires a fix
-        pegasusAPI.findUser(username: username) { (user, orders) in
-            self.orders = orders
+        if let username = user!.username {
+            //TODO:- requires a fix
+            pegasusAPI.findUser(username: username) { (user, orders) in
+                self.orders = orders
+            }
         }
+
         
         
         self.tableView.reloadData()
@@ -129,13 +132,13 @@ class OrdersViewController: UITableViewController {
         print("Username: \(user!.username!)")
 //        self.refresh()
     
-        pegasusAPI.findUser(username: self.user!.username!) { (user, orders) in
-            self.orders = orders
-            print("Updating orders!")
-            self.tableView.reloadData()
-            
-            print("Count \(self.orders.count)")
-        }
+//        pegasusAPI.findUser(username: self.user!.username!) { (user, orders) in
+//            self.orders = orders
+//            print("Updating orders!")
+//            self.tableView.reloadData()
+//            
+//            print("Count \(self.orders.count)")
+//        }
 
         print("selecting orders history tabBar controller")
         

@@ -50,6 +50,16 @@ class KleenerButton: UIButton {
         self.layer.masksToBounds = false
 
     }
+    func setloginShadow() {
+        //Add shadow layer to the button
+        self.layer.shadowRadius = 3.0
+        self.layer.shadowColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+        self.layer.shadowOffset = CGSize(width: 0, height: 5)
+        //        self.layer.shadowOpacity = 0.02
+        self.layer.shadowOpacity = 0.1
+        self.layer.masksToBounds = false
+        
+    }
     
     func dropdownButtonSetup() {
         self.backgroundColor = #colorLiteral(red: 0.984059155, green: 0.9886127114, blue: 0.9997449517, alpha: 1)
@@ -59,7 +69,7 @@ class KleenerButton: UIButton {
     }
     
     func checkoutButtonSetup() {
-        self.backgroundColor = #colorLiteral(red: 0.3921884298, green: 0.7567006946, blue: 0.9980239272, alpha: 1)
+        self.backgroundColor = #colorLiteral(red: 0.3376837969, green: 0.5794288516, blue: 1, alpha: 1)
         self.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
     }
     

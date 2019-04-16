@@ -38,6 +38,7 @@ class CheckoutViewController: UIViewController, SelectionDelegate {
         self.setupPaymentButton()
         self.setupPaymentPopup()
         
+        
         paymentPopup?.delegate = self
         
         self.refreshOrder()
@@ -100,7 +101,7 @@ class CheckoutViewController: UIViewController, SelectionDelegate {
     
     func fetchClientToken() {
         
-        let clientTokenURL = URL(string: "http://localhost:3000/client_token")
+        let clientTokenURL = URL(string: "https://lit-anchorage-91794.herokuapp.com/client_token")
         
         let braintreeClient = BTAPIClient(authorization: "sandbox_8fmdbn27_wf328nvtnstqddpr")!
         let cardClient = BTCardClient(apiClient: braintreeClient)
@@ -132,8 +133,6 @@ class CheckoutViewController: UIViewController, SelectionDelegate {
                 
             }.resume()
         }
-        
-
         
     }
     
@@ -176,7 +175,7 @@ class CheckoutViewController: UIViewController, SelectionDelegate {
     
     
     func postNonceToServer(paymentMethodNonce: String) {
-        let paymentURL = URL(string: "http://localhost:3000/checkout")!
+        let paymentURL = URL(string: "https://lit-anchorage-91794.herokuapp.com/checkout")!
         var request = URLRequest(url: paymentURL)
         
         let cost = String(order!.cost!)
@@ -231,15 +230,18 @@ class CheckoutViewController: UIViewController, SelectionDelegate {
                     DispatchQueue.main.async {
 //                        self.navigationController.present
 
-                        
                         self.paymentPopupTopConstraint!.constant = -200
+                        
+                        
                         
                         UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [.curveEaseIn, .allowUserInteraction], animations: {
                             self.view.layoutIfNeeded()
                         }, completion: nil)
 
                     }
-
+                    
+                    //Call Delegate over here to show updated View
+                    self.onPaymentSuccess(order: self.order!)
                     
                 }
     
@@ -331,15 +333,12 @@ class CheckoutViewController: UIViewController, SelectionDelegate {
         let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
         self.summaryView = SummaryView(frame: rect)
         self.view.addSubview(summaryView!)
+        
         summaryView!.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        
         summaryView!.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
         summaryView!.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
         summaryView!.heightAnchor.constraint(equalToConstant: 500).isActive = true
         summaryView!.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0).isActive = true
-        
     }
     
     func setupCheckoutView() {
@@ -373,64 +372,14 @@ class CheckoutViewController: UIViewController, SelectionDelegate {
         self.present(controller, animated: true)
     }
     
-    //MARK:- Switch Statement to get the day of the week
-    private func getDayOfTheWeek(weekday: String) -> Int {
-        
-        guard let day = Days(rawValue: weekday) else { return 0
-            //            print("the day: \(day)")
-//            self.day = day
-        }
-        
-        switch day {
-            case .monday:
-                return 0
-            case .tuesday:
-                return 1
-            case .wednesday:
-                return 2
-            case .thursday:
-                return 3
-            case .friday:
-                return 4
-            case .saturday:
-                return 5
-            case .sunday:
-                return 6
-        }
-        
-    }
-    
     //Return the day of the week
     private func convertDayToDate(day: Int) -> String {
-        
         let userDate = Calendar.current.date(byAdding: .day, value: day, to: Date())
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd'-'MM'-'yyyy"
         let date = dateFormatter.string(from: userDate!)
-        
         return date
-        
     }
-    
-    
-//    func onSelectDate(sender: UIView) {
-//        //        print("Day selected: \(day)")
-//        let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-//        
-//        let controller = DaysTableViewController(days) { (day) in
-//            
-//            let dateSelected = self.getDayOfTheWeek(weekday: day)
-//            let date = self.convertDayToDate(day: dateSelected)
-//            
-//            //            self.checkoutView?.updateDate(weekDay: self.dayModel.day)
-//            //            self.checkoutView?.updateDate(weekDay: date)
-//            self.checkoutView?.updateDate(weekDay: day, date: date)
-//        }
-//        
-//        controller.preferredContentSize = CGSize(width: 200, height: 200)
-//        
-//        showPopup(controller, sourceView: sender)
-//    }
     
     func didSelectItem(state: Bool, detergentText: String) {
         print("")
@@ -458,6 +407,10 @@ class CheckoutViewController: UIViewController, SelectionDelegate {
     
     func onSelectDate(sender: UIView) {
         print("nothing")
+    }
+    
+    func onPaymentSuccess(order: Order) {
+        print("TODO")
     }
     
     
@@ -500,6 +453,10 @@ class CheckoutViewController: UIViewController, SelectionDelegate {
     
     func proceedToCheckout(proceedButton: UIButton) {
         print("Oink")
+    }
+    
+    override func didMove(toParent parent: UIViewController?) {
+        paymentPopupTopConstraint?.constant = 0
     }
 }
 

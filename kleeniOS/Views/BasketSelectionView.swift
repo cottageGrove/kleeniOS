@@ -200,7 +200,7 @@ class BasketSelectionView: UIView {
             else {
                 print("Cannot go below 0 basket")
                 self.basketLabel?.text = "Please Select Baskets"
-                self.basketLabel?.textColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+                self.basketLabel?.textColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
                 
                 self.delegate?.didSelectBasket(basketTotal: 0)
             }
@@ -209,7 +209,7 @@ class BasketSelectionView: UIView {
             if basketCount == 0 {
                 print("Cannot go below 0 basket")
                 self.basketLabel?.text = "Please Select Baskets"
-                self.basketLabel?.textColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+                self.basketLabel?.textColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
                 
             }
 

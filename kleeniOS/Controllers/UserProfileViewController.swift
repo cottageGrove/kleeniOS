@@ -34,11 +34,11 @@ class UserProfileViewController: UIViewController {
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(signOut))
         
-        retrieveUserDetails()
+        refreshUserDetails()
         
     }
     
-    func retrieveUserDetails() {
+    func refreshUserDetails() {
         self.pool = AWSCognitoIdentityUserPool(forKey: AWSCognitoUserPoolsSignInProviderKey)
         if (self.cognitoUser == nil) {
             self.cognitoUser = self.pool?.currentUser()
@@ -51,7 +51,7 @@ class UserProfileViewController: UIViewController {
         
         DispatchQueue.main.async {
             
-            pegasusAPI.findUser(username: username, completionHandler: { (user, orders) in
+            pegasusAPI.retrieveUserDetails(username: username, completionHandler: { (user) in
                 self.username.text = user.username
                 self.firstname.text = user.firstName
                 self.lastname.text = user.lastName
@@ -61,7 +61,7 @@ class UserProfileViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        retrieveUserDetails()
+//        retrieveUserDetails()
     }
     
     func updateUserDetails(user: User) {
@@ -74,8 +74,8 @@ class UserProfileViewController: UIViewController {
     
     
     @objc func signOut() {
-        user = nil
         DispatchQueue.main.async {
+            print("Removing user details")
             self.username.text = ""
             self.firstname.text = ""
             self.lastname.text = ""

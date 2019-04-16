@@ -18,7 +18,8 @@ class MainTabBarController: UITabBarController, UINavigationBarDelegate, UITabBa
     
     var response: AWSCognitoIdentityUserGetDetailsResponse?
     var cognitoUser: AWSCognitoIdentityUser?
-    var user: User?
+    var user: AWSCognitoIdentityUser?
+    var localUser = User()
     var pool: AWSCognitoIdentityUserPool?
     var orderHistoryVC : OrdersViewController?
     var userProfileVC : UserProfileViewController?
@@ -51,6 +52,29 @@ class MainTabBarController: UITabBarController, UINavigationBarDelegate, UITabBa
     }
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        
+        let pegasusAPI = PegasusAPI()
+        
+        self.pool = AWSCognitoIdentityUserPool(forKey: AWSCognitoUserPoolsSignInProviderKey)
+        self.user = self.pool?.currentUser()
+        
+        self.refresh()
+        
+        if tabBarController.selectedIndex == 1 {
+            pegasusAPI.findUser(username: self.user!.username!) { (user, orders) in
+                self.orderHistoryVC?.orders = orders
+                print("Updating orders!")
+                self.orderHistoryVC?.tableView.reloadData()
+            }
+            
+        }
+        
+        if tabBarController.selectedIndex == 2 {
+            
+            pegasusAPI.retrieveUserDetails(username: self.user!.username!) { (user) in
+                self.userProfileVC?.updateUserDetails(user: user)
+            }
+        }
         print("Tab bar Item Selected")
     
     }
@@ -150,7 +174,16 @@ class MainTabBarController: UITabBarController, UINavigationBarDelegate, UITabBa
         let laundry = Laundry(baskets: 0, detergent: "Persol", laundryType: nil)
         let order = Order(datePlaced: ".", dropoffDate: "", laundry: nil, pickupDate: "")
         order.laundry = laundry
+        
+        self.selectedIndex = 0
+        self.selectedViewController = orderSelectionVC?.navigationController
+        
+        
+        //Reset the various Views linked to ordersSelectionVC
         orderSelectionVC?.restorePreviousOrder(order: order)
+        orderSelectionVC?.signingOut()
+//        self.navigationController?.popToViewController(orderSelectionVC!, animated: true)
+//        tabBarController?.selectedIndex = 0
         
     }
     

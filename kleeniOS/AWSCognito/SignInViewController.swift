@@ -16,6 +16,7 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var signUpButton: KleenerButton!
+    @IBOutlet weak var loginButton: KleenerButton!
     
     var passwordAuthenticationCompletion: AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails>?
     var usernameText: String?
@@ -24,10 +25,21 @@ class SignInViewController: UIViewController {
         super.viewWillAppear(animated)
         self.password.text = nil
         self.username.text = usernameText
+        self.password.layer.cornerRadius = 20
+        self.password.layer.borderWidth = 0.1
+        self.password.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        self.username.layer.cornerRadius = 20
+        self.username.layer.borderWidth = 0.1
+        self.username.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         
-        self.signUpButton.setButtonText(titleText: "Sign Up")
-        self.signUpButton.checkoutButtonSetup()
-        self.signUpButton.setCornerRadius(radius: 15)
+//        self.signUpButton.setButtonText(titleText: "Sign Up")
+//        self.signUpButton.checkoutButtonSetup()
+//        self.signUpButton.setCornerRadius(radius: 17.5)
+        
+        self.loginButton.setButtonText(titleText: "Login")
+        self.loginButton.checkoutButtonSetup()
+        self.loginButton.setCornerRadius(radius: 20)
+        self.loginButton.setloginShadow()
         
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
@@ -38,6 +50,7 @@ class SignInViewController: UIViewController {
             let authDetails = AWSCognitoIdentityPasswordAuthenticationDetails(username: self.username.text!, password: self.password.text! )
 
             self.passwordAuthenticationCompletion?.trySet(result: authDetails)
+
             
         } else {
             let alertController = UIAlertController(title: "Missing information",
