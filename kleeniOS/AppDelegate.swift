@@ -46,8 +46,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setupAWSCognito()
         IQKeyboardManager.shared.enable = true
         
+        let notificationTypes: UIUserNotificationType = [UIUserNotificationType.alert, UIUserNotificationType.sound]
+
+        
+        let notification: UIUserNotificationType
+        
+        
         return true
     }
+    
     
     func setupAWSCognito() {
         

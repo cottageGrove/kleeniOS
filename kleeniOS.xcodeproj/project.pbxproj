@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3896EBAA5C30E7A465EA3FE3 /* Pods_kleeniOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1E768B3B71C111BBF48520B /* Pods_kleeniOS.framework */; };
 		B40E0C56224ADF6F003B2629 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40E0C55224ADF6F003B2629 /* SignInViewController.swift */; };
 		B40E0C58224AE05A003B2629 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40E0C57224AE05A003B2629 /* Constants.swift */; };
 		B40E0C5A224AE369003B2629 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B40E0C59224AE369003B2629 /* Main.storyboard */; };
@@ -54,10 +55,11 @@
 		B4F6E8A82224E749008480B8 /* AlwaysShowPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F6E8A52224E749008480B8 /* AlwaysShowPopup.swift */; };
 		B4F6E8A92224E749008480B8 /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F6E8A62224E749008480B8 /* ExampleViewController.swift */; };
 		B4FFDE7C221F16230050DE4B /* CheckoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FFDE7B221F16230050DE4B /* CheckoutView.swift */; };
-		B63B8CFD964D9ED319745F78 /* Pods_kleeniOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC68E43083B09F1701A1535 /* Pods_kleeniOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A1E768B3B71C111BBF48520B /* Pods_kleeniOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kleeniOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B12749F5548298A80D11E2D6 /* Pods-kleeniOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kleeniOS.release.xcconfig"; path = "Target Support Files/Pods-kleeniOS/Pods-kleeniOS.release.xcconfig"; sourceTree = "<group>"; };
 		B40E0C55224ADF6F003B2629 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		B40E0C57224AE05A003B2629 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B40E0C59224AE369003B2629 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -107,9 +109,7 @@
 		B4F6E8A52224E749008480B8 /* AlwaysShowPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlwaysShowPopup.swift; sourceTree = "<group>"; };
 		B4F6E8A62224E749008480B8 /* ExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		B4FFDE7B221F16230050DE4B /* CheckoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutView.swift; sourceTree = "<group>"; };
-		C2283A734ECB01B25E8BEBB5 /* Pods-kleeniOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kleeniOS.release.xcconfig"; path = "Target Support Files/Pods-kleeniOS/Pods-kleeniOS.release.xcconfig"; sourceTree = "<group>"; };
-		DAC68E43083B09F1701A1535 /* Pods_kleeniOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kleeniOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F12E88B799C193DAE23CBCD1 /* Pods-kleeniOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kleeniOS.debug.xcconfig"; path = "Target Support Files/Pods-kleeniOS/Pods-kleeniOS.debug.xcconfig"; sourceTree = "<group>"; };
+		E827E6B9BE48BBE477E60676 /* Pods-kleeniOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kleeniOS.debug.xcconfig"; path = "Target Support Files/Pods-kleeniOS/Pods-kleeniOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,13 +117,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B63B8CFD964D9ED319745F78 /* Pods_kleeniOS.framework in Frameworks */,
+				3896EBAA5C30E7A465EA3FE3 /* Pods_kleeniOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6EE0DFB27D7CC40447888C49 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A1E768B3B71C111BBF48520B /* Pods_kleeniOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B40E0C3D224AD754003B2629 /* AWSCognito */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,7 +207,7 @@
 				B43BF3FC2208D77F00EE9405 /* kleeniOS */,
 				B43BF3FB2208D77F00EE9405 /* Products */,
 				BA33A4907A43D1E5A6DF2E68 /* Pods */,
-				CBEC1C2F40EAD5323229961E /* Frameworks */,
+				6EE0DFB27D7CC40447888C49 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -288,18 +296,10 @@
 		BA33A4907A43D1E5A6DF2E68 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F12E88B799C193DAE23CBCD1 /* Pods-kleeniOS.debug.xcconfig */,
-				C2283A734ECB01B25E8BEBB5 /* Pods-kleeniOS.release.xcconfig */,
+				E827E6B9BE48BBE477E60676 /* Pods-kleeniOS.debug.xcconfig */,
+				B12749F5548298A80D11E2D6 /* Pods-kleeniOS.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		CBEC1C2F40EAD5323229961E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				DAC68E43083B09F1701A1535 /* Pods_kleeniOS.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,11 +309,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B43BF40C2208D78100EE9405 /* Build configuration list for PBXNativeTarget "kleeniOS" */;
 			buildPhases = (
-				9D0D1471035BC2988DD953BC /* [CP] Check Pods Manifest.lock */,
+				27B860FD2D45C94A904773C0 /* [CP] Check Pods Manifest.lock */,
 				B43BF3F62208D77F00EE9405 /* Sources */,
 				B43BF3F72208D77F00EE9405 /* Frameworks */,
 				B43BF3F82208D77F00EE9405 /* Resources */,
-				99269BC39E9CAC057C5A22CC /* [CP] Embed Pods Frameworks */,
+				8E65A657056CDB34A6676D1A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -374,24 +374,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		99269BC39E9CAC057C5A22CC /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-kleeniOS/Pods-kleeniOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-kleeniOS/Pods-kleeniOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-kleeniOS/Pods-kleeniOS-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9D0D1471035BC2988DD953BC /* [CP] Check Pods Manifest.lock */ = {
+		27B860FD2D45C94A904773C0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -411,6 +394,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8E65A657056CDB34A6676D1A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-kleeniOS/Pods-kleeniOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-kleeniOS/Pods-kleeniOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-kleeniOS/Pods-kleeniOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -596,7 +596,7 @@
 		};
 		B43BF40D2208D78100EE9405 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F12E88B799C193DAE23CBCD1 /* Pods-kleeniOS.debug.xcconfig */;
+			baseConfigurationReference = E827E6B9BE48BBE477E60676 /* Pods-kleeniOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -616,7 +616,7 @@
 		};
 		B43BF40E2208D78100EE9405 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C2283A734ECB01B25E8BEBB5 /* Pods-kleeniOS.release.xcconfig */;
+			baseConfigurationReference = B12749F5548298A80D11E2D6 /* Pods-kleeniOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
