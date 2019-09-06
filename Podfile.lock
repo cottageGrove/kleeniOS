@@ -1,0 +1,89 @@
+PODS:
+  - AWSAppSync (2.10.2):
+    - AWSCore (~> 2.8.0)
+    - ReachabilitySwift (~> 4.3.0)
+    - SQLite.swift (= 0.11.5)
+  - AWSCognitoIdentityProvider (2.8.4):
+    - AWSCognitoIdentityProviderASF (= 1.0.1)
+    - AWSCore (= 2.8.4)
+  - AWSCognitoIdentityProviderASF (1.0.1)
+  - AWSCore (2.8.4)
+  - Braintree (4.23.0):
+    - Braintree/Card (= 4.23.0)
+    - Braintree/Core (= 4.23.0)
+    - Braintree/PayPal (= 4.23.0)
+    - Braintree/UI (= 4.23.0)
+  - Braintree/Card (4.23.0):
+    - Braintree/Core
+  - Braintree/Core (4.23.0)
+  - Braintree/PaymentFlow (4.23.0):
+    - Braintree/Card
+    - Braintree/Core
+    - Braintree/PayPalOneTouch
+  - Braintree/PayPal (4.23.0):
+    - Braintree/Core
+    - Braintree/PayPalOneTouch
+  - Braintree/PayPalDataCollector (4.23.0):
+    - Braintree/Core
+    - Braintree/PayPalUtils
+  - Braintree/PayPalOneTouch (4.23.0):
+    - Braintree/Core
+    - Braintree/PayPalDataCollector
+    - Braintree/PayPalUtils
+  - Braintree/PayPalUtils (4.23.0)
+  - Braintree/UI (4.23.0):
+    - Braintree/Card
+    - Braintree/Core
+  - Braintree/UnionPay (4.23.0):
+    - Braintree/Card
+    - Braintree/Core
+  - BraintreeDropIn (7.1.0):
+    - BraintreeDropIn/DropIn (= 7.1.0)
+  - BraintreeDropIn/DropIn (7.1.0):
+    - Braintree/Card (~> 4.23)
+    - Braintree/Core (~> 4.23)
+    - Braintree/PaymentFlow (~> 4.23)
+    - Braintree/PayPal (~> 4.23)
+    - Braintree/UnionPay (~> 4.23)
+    - BraintreeDropIn/UIKit
+  - BraintreeDropIn/UIKit (7.1.0)
+  - IQKeyboardManagerSwift (6.2.1)
+  - ReachabilitySwift (4.3.1)
+  - SQLite.swift (0.11.5):
+    - SQLite.swift/standard (= 0.11.5)
+  - SQLite.swift/standard (0.11.5)
+
+DEPENDENCIES:
+  - AWSAppSync (~> 2.10.0)
+  - AWSCognitoIdentityProvider (~> 2.8.0)
+  - AWSCore (~> 2.8.0)
+  - Braintree
+  - BraintreeDropIn
+  - IQKeyboardManagerSwift
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AWSAppSync
+    - AWSCognitoIdentityProvider
+    - AWSCognitoIdentityProviderASF
+    - AWSCore
+    - Braintree
+    - BraintreeDropIn
+    - IQKeyboardManagerSwift
+    - ReachabilitySwift
+    - SQLite.swift
+
+SPEC CHECKSUMS:
+  AWSAppSync: 791a9916d06df4eb682e1265ebc57eb083832d6b
+  AWSCognitoIdentityProvider: ba1858e7524b29254172ae333e1f96ddc93507dc
+  AWSCognitoIdentityProviderASF: f94f1a502e72ef3d0a1de93e10bf7a79c8698118
+  AWSCore: 734b0d67c2c77f6edae9e5520431a37310ea4193
+  Braintree: b5841b9b1c1dadc86959db3e29d36099b67f91bf
+  BraintreeDropIn: a019fcbf4edb87c55780ec01d5db3998b19164ce
+  IQKeyboardManagerSwift: 0f0ae8935360b4003e6ea1ac7c19898f01e2f7c7
+  ReachabilitySwift: 4032e2f59586e11e3b0ebe15b167abdd587a388b
+  SQLite.swift: 6e5356850bb1791459f8c16d6ee9195b28714a2e
+
+PODFILE CHECKSUM: 6250fd4b7ddca06b7262f4c5fe0ea3a68d91ae6c
+
+COCOAPODS: 1.7.0.beta.2

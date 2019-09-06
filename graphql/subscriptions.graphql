@@ -1,0 +1,745 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreateUser {
+  onCreateUser {
+    id
+    username
+    loginDate
+    firstname
+    lastname
+    orders {
+      items {
+        id
+        pickupDate
+        dropoffDate
+        deliveryTime
+        totalCost
+        laundry {
+          id
+          baskets
+          detergent
+          washType
+          order {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+        }
+        user {
+          id
+          username
+          loginDate
+          firstname
+          lastname
+          orders {
+            items {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+subscription OnUpdateUser {
+  onUpdateUser {
+    id
+    username
+    loginDate
+    firstname
+    lastname
+    orders {
+      items {
+        id
+        pickupDate
+        dropoffDate
+        deliveryTime
+        totalCost
+        laundry {
+          id
+          baskets
+          detergent
+          washType
+          order {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+        }
+        user {
+          id
+          username
+          loginDate
+          firstname
+          lastname
+          orders {
+            items {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+subscription OnDeleteUser {
+  onDeleteUser {
+    id
+    username
+    loginDate
+    firstname
+    lastname
+    orders {
+      items {
+        id
+        pickupDate
+        dropoffDate
+        deliveryTime
+        totalCost
+        laundry {
+          id
+          baskets
+          detergent
+          washType
+          order {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+        }
+        user {
+          id
+          username
+          loginDate
+          firstname
+          lastname
+          orders {
+            items {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+subscription OnCreateOrder {
+  onCreateOrder {
+    id
+    pickupDate
+    dropoffDate
+    deliveryTime
+    totalCost
+    laundry {
+      id
+      baskets
+      detergent
+      washType
+      order {
+        id
+        pickupDate
+        dropoffDate
+        deliveryTime
+        totalCost
+        laundry {
+          id
+          baskets
+          detergent
+          washType
+          order {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+        }
+        user {
+          id
+          username
+          loginDate
+          firstname
+          lastname
+          orders {
+            items {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+            nextToken
+          }
+        }
+      }
+    }
+    user {
+      id
+      username
+      loginDate
+      firstname
+      lastname
+      orders {
+        items {
+          id
+          pickupDate
+          dropoffDate
+          deliveryTime
+          totalCost
+          laundry {
+            id
+            baskets
+            detergent
+            washType
+            order {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+          }
+          user {
+            id
+            username
+            loginDate
+            firstname
+            lastname
+            orders {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+subscription OnUpdateOrder {
+  onUpdateOrder {
+    id
+    pickupDate
+    dropoffDate
+    deliveryTime
+    totalCost
+    laundry {
+      id
+      baskets
+      detergent
+      washType
+      order {
+        id
+        pickupDate
+        dropoffDate
+        deliveryTime
+        totalCost
+        laundry {
+          id
+          baskets
+          detergent
+          washType
+          order {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+        }
+        user {
+          id
+          username
+          loginDate
+          firstname
+          lastname
+          orders {
+            items {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+            nextToken
+          }
+        }
+      }
+    }
+    user {
+      id
+      username
+      loginDate
+      firstname
+      lastname
+      orders {
+        items {
+          id
+          pickupDate
+          dropoffDate
+          deliveryTime
+          totalCost
+          laundry {
+            id
+            baskets
+            detergent
+            washType
+            order {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+          }
+          user {
+            id
+            username
+            loginDate
+            firstname
+            lastname
+            orders {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+subscription OnDeleteOrder {
+  onDeleteOrder {
+    id
+    pickupDate
+    dropoffDate
+    deliveryTime
+    totalCost
+    laundry {
+      id
+      baskets
+      detergent
+      washType
+      order {
+        id
+        pickupDate
+        dropoffDate
+        deliveryTime
+        totalCost
+        laundry {
+          id
+          baskets
+          detergent
+          washType
+          order {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+        }
+        user {
+          id
+          username
+          loginDate
+          firstname
+          lastname
+          orders {
+            items {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+            nextToken
+          }
+        }
+      }
+    }
+    user {
+      id
+      username
+      loginDate
+      firstname
+      lastname
+      orders {
+        items {
+          id
+          pickupDate
+          dropoffDate
+          deliveryTime
+          totalCost
+          laundry {
+            id
+            baskets
+            detergent
+            washType
+            order {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+          }
+          user {
+            id
+            username
+            loginDate
+            firstname
+            lastname
+            orders {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+subscription OnCreateLaundry {
+  onCreateLaundry {
+    id
+    baskets
+    detergent
+    washType
+    order {
+      id
+      pickupDate
+      dropoffDate
+      deliveryTime
+      totalCost
+      laundry {
+        id
+        baskets
+        detergent
+        washType
+        order {
+          id
+          pickupDate
+          dropoffDate
+          deliveryTime
+          totalCost
+          laundry {
+            id
+            baskets
+            detergent
+            washType
+            order {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+          }
+          user {
+            id
+            username
+            loginDate
+            firstname
+            lastname
+            orders {
+              nextToken
+            }
+          }
+        }
+      }
+      user {
+        id
+        username
+        loginDate
+        firstname
+        lastname
+        orders {
+          items {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+          nextToken
+        }
+      }
+    }
+  }
+}
+subscription OnUpdateLaundry {
+  onUpdateLaundry {
+    id
+    baskets
+    detergent
+    washType
+    order {
+      id
+      pickupDate
+      dropoffDate
+      deliveryTime
+      totalCost
+      laundry {
+        id
+        baskets
+        detergent
+        washType
+        order {
+          id
+          pickupDate
+          dropoffDate
+          deliveryTime
+          totalCost
+          laundry {
+            id
+            baskets
+            detergent
+            washType
+            order {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+          }
+          user {
+            id
+            username
+            loginDate
+            firstname
+            lastname
+            orders {
+              nextToken
+            }
+          }
+        }
+      }
+      user {
+        id
+        username
+        loginDate
+        firstname
+        lastname
+        orders {
+          items {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+          nextToken
+        }
+      }
+    }
+  }
+}
+subscription OnDeleteLaundry {
+  onDeleteLaundry {
+    id
+    baskets
+    detergent
+    washType
+    order {
+      id
+      pickupDate
+      dropoffDate
+      deliveryTime
+      totalCost
+      laundry {
+        id
+        baskets
+        detergent
+        washType
+        order {
+          id
+          pickupDate
+          dropoffDate
+          deliveryTime
+          totalCost
+          laundry {
+            id
+            baskets
+            detergent
+            washType
+            order {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+          }
+          user {
+            id
+            username
+            loginDate
+            firstname
+            lastname
+            orders {
+              nextToken
+            }
+          }
+        }
+      }
+      user {
+        id
+        username
+        loginDate
+        firstname
+        lastname
+        orders {
+          items {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+          nextToken
+        }
+      }
+    }
+  }
+}

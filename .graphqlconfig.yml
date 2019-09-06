@@ -1,0 +1,18 @@
+projects:
+  kleenios:
+    schemaPath: graphql/schema.json
+    includes:
+      - graphql/**/*.graphql
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        graphQLApiId: xaiyotqiqfaxpmkvxxlxkt2ooi
+        codeGenTarget: swift
+        generatedFileName: API.swift
+        docsFilePath: graphql
+        region: us-east-1
+        maxDepth: 6
+      endpoints:
+        prod: >-
+          https://fnqlv64eovddfherpsmxeeca4a.appsync-api.us-east-1.amazonaws.com/graphql

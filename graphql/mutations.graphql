@@ -1,0 +1,745 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    id
+    username
+    loginDate
+    firstname
+    lastname
+    orders {
+      items {
+        id
+        pickupDate
+        dropoffDate
+        deliveryTime
+        totalCost
+        laundry {
+          id
+          baskets
+          detergent
+          washType
+          order {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+        }
+        user {
+          id
+          username
+          loginDate
+          firstname
+          lastname
+          orders {
+            items {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+mutation UpdateUser($input: UpdateUserInput!) {
+  updateUser(input: $input) {
+    id
+    username
+    loginDate
+    firstname
+    lastname
+    orders {
+      items {
+        id
+        pickupDate
+        dropoffDate
+        deliveryTime
+        totalCost
+        laundry {
+          id
+          baskets
+          detergent
+          washType
+          order {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+        }
+        user {
+          id
+          username
+          loginDate
+          firstname
+          lastname
+          orders {
+            items {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+mutation DeleteUser($input: DeleteUserInput!) {
+  deleteUser(input: $input) {
+    id
+    username
+    loginDate
+    firstname
+    lastname
+    orders {
+      items {
+        id
+        pickupDate
+        dropoffDate
+        deliveryTime
+        totalCost
+        laundry {
+          id
+          baskets
+          detergent
+          washType
+          order {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+        }
+        user {
+          id
+          username
+          loginDate
+          firstname
+          lastname
+          orders {
+            items {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+mutation CreateOrder($input: CreateOrderInput!) {
+  createOrder(input: $input) {
+    id
+    pickupDate
+    dropoffDate
+    deliveryTime
+    totalCost
+    laundry {
+      id
+      baskets
+      detergent
+      washType
+      order {
+        id
+        pickupDate
+        dropoffDate
+        deliveryTime
+        totalCost
+        laundry {
+          id
+          baskets
+          detergent
+          washType
+          order {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+        }
+        user {
+          id
+          username
+          loginDate
+          firstname
+          lastname
+          orders {
+            items {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+            nextToken
+          }
+        }
+      }
+    }
+    user {
+      id
+      username
+      loginDate
+      firstname
+      lastname
+      orders {
+        items {
+          id
+          pickupDate
+          dropoffDate
+          deliveryTime
+          totalCost
+          laundry {
+            id
+            baskets
+            detergent
+            washType
+            order {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+          }
+          user {
+            id
+            username
+            loginDate
+            firstname
+            lastname
+            orders {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+mutation UpdateOrder($input: UpdateOrderInput!) {
+  updateOrder(input: $input) {
+    id
+    pickupDate
+    dropoffDate
+    deliveryTime
+    totalCost
+    laundry {
+      id
+      baskets
+      detergent
+      washType
+      order {
+        id
+        pickupDate
+        dropoffDate
+        deliveryTime
+        totalCost
+        laundry {
+          id
+          baskets
+          detergent
+          washType
+          order {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+        }
+        user {
+          id
+          username
+          loginDate
+          firstname
+          lastname
+          orders {
+            items {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+            nextToken
+          }
+        }
+      }
+    }
+    user {
+      id
+      username
+      loginDate
+      firstname
+      lastname
+      orders {
+        items {
+          id
+          pickupDate
+          dropoffDate
+          deliveryTime
+          totalCost
+          laundry {
+            id
+            baskets
+            detergent
+            washType
+            order {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+          }
+          user {
+            id
+            username
+            loginDate
+            firstname
+            lastname
+            orders {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+mutation DeleteOrder($input: DeleteOrderInput!) {
+  deleteOrder(input: $input) {
+    id
+    pickupDate
+    dropoffDate
+    deliveryTime
+    totalCost
+    laundry {
+      id
+      baskets
+      detergent
+      washType
+      order {
+        id
+        pickupDate
+        dropoffDate
+        deliveryTime
+        totalCost
+        laundry {
+          id
+          baskets
+          detergent
+          washType
+          order {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+        }
+        user {
+          id
+          username
+          loginDate
+          firstname
+          lastname
+          orders {
+            items {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+            nextToken
+          }
+        }
+      }
+    }
+    user {
+      id
+      username
+      loginDate
+      firstname
+      lastname
+      orders {
+        items {
+          id
+          pickupDate
+          dropoffDate
+          deliveryTime
+          totalCost
+          laundry {
+            id
+            baskets
+            detergent
+            washType
+            order {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+          }
+          user {
+            id
+            username
+            loginDate
+            firstname
+            lastname
+            orders {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+mutation CreateLaundry($input: CreateLaundryInput!) {
+  createLaundry(input: $input) {
+    id
+    baskets
+    detergent
+    washType
+    order {
+      id
+      pickupDate
+      dropoffDate
+      deliveryTime
+      totalCost
+      laundry {
+        id
+        baskets
+        detergent
+        washType
+        order {
+          id
+          pickupDate
+          dropoffDate
+          deliveryTime
+          totalCost
+          laundry {
+            id
+            baskets
+            detergent
+            washType
+            order {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+          }
+          user {
+            id
+            username
+            loginDate
+            firstname
+            lastname
+            orders {
+              nextToken
+            }
+          }
+        }
+      }
+      user {
+        id
+        username
+        loginDate
+        firstname
+        lastname
+        orders {
+          items {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+          nextToken
+        }
+      }
+    }
+  }
+}
+mutation UpdateLaundry($input: UpdateLaundryInput!) {
+  updateLaundry(input: $input) {
+    id
+    baskets
+    detergent
+    washType
+    order {
+      id
+      pickupDate
+      dropoffDate
+      deliveryTime
+      totalCost
+      laundry {
+        id
+        baskets
+        detergent
+        washType
+        order {
+          id
+          pickupDate
+          dropoffDate
+          deliveryTime
+          totalCost
+          laundry {
+            id
+            baskets
+            detergent
+            washType
+            order {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+          }
+          user {
+            id
+            username
+            loginDate
+            firstname
+            lastname
+            orders {
+              nextToken
+            }
+          }
+        }
+      }
+      user {
+        id
+        username
+        loginDate
+        firstname
+        lastname
+        orders {
+          items {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+          nextToken
+        }
+      }
+    }
+  }
+}
+mutation DeleteLaundry($input: DeleteLaundryInput!) {
+  deleteLaundry(input: $input) {
+    id
+    baskets
+    detergent
+    washType
+    order {
+      id
+      pickupDate
+      dropoffDate
+      deliveryTime
+      totalCost
+      laundry {
+        id
+        baskets
+        detergent
+        washType
+        order {
+          id
+          pickupDate
+          dropoffDate
+          deliveryTime
+          totalCost
+          laundry {
+            id
+            baskets
+            detergent
+            washType
+            order {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+          }
+          user {
+            id
+            username
+            loginDate
+            firstname
+            lastname
+            orders {
+              nextToken
+            }
+          }
+        }
+      }
+      user {
+        id
+        username
+        loginDate
+        firstname
+        lastname
+        orders {
+          items {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+          nextToken
+        }
+      }
+    }
+  }
+}

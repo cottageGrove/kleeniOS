@@ -15,7 +15,6 @@ class OrderSelectionViewController: UIViewController, SelectionDelegate, Refresh
     func onSignOut() {
         print("Signed out man")
     }
-    
 
     //AWSCognito UserPool setup
     var response: AWSCognitoIdentityUserGetDetailsResponse?

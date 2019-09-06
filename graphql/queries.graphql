@@ -1,0 +1,445 @@
+# this is an auto generated file. This will be overwritten
+query GetUser($id: ID!) {
+  getUser(id: $id) {
+    id
+    username
+    loginDate
+    firstname
+    lastname
+    orders {
+      items {
+        id
+        pickupDate
+        dropoffDate
+        deliveryTime
+        totalCost
+        laundry {
+          id
+          baskets
+          detergent
+          washType
+          order {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+        }
+        user {
+          id
+          username
+          loginDate
+          firstname
+          lastname
+          orders {
+            items {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+            nextToken
+          }
+        }
+      }
+      nextToken
+    }
+  }
+}
+query ListUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      username
+      loginDate
+      firstname
+      lastname
+      orders {
+        items {
+          id
+          pickupDate
+          dropoffDate
+          deliveryTime
+          totalCost
+          laundry {
+            id
+            baskets
+            detergent
+            washType
+            order {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+          }
+          user {
+            id
+            username
+            loginDate
+            firstname
+            lastname
+            orders {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
+    }
+    nextToken
+  }
+}
+query GetOrder($id: ID!) {
+  getOrder(id: $id) {
+    id
+    pickupDate
+    dropoffDate
+    deliveryTime
+    totalCost
+    laundry {
+      id
+      baskets
+      detergent
+      washType
+      order {
+        id
+        pickupDate
+        dropoffDate
+        deliveryTime
+        totalCost
+        laundry {
+          id
+          baskets
+          detergent
+          washType
+          order {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+        }
+        user {
+          id
+          username
+          loginDate
+          firstname
+          lastname
+          orders {
+            items {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+            nextToken
+          }
+        }
+      }
+    }
+    user {
+      id
+      username
+      loginDate
+      firstname
+      lastname
+      orders {
+        items {
+          id
+          pickupDate
+          dropoffDate
+          deliveryTime
+          totalCost
+          laundry {
+            id
+            baskets
+            detergent
+            washType
+            order {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+          }
+          user {
+            id
+            username
+            loginDate
+            firstname
+            lastname
+            orders {
+              nextToken
+            }
+          }
+        }
+        nextToken
+      }
+    }
+  }
+}
+query ListOrders(
+  $filter: ModelOrderFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listOrders(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      pickupDate
+      dropoffDate
+      deliveryTime
+      totalCost
+      laundry {
+        id
+        baskets
+        detergent
+        washType
+        order {
+          id
+          pickupDate
+          dropoffDate
+          deliveryTime
+          totalCost
+          laundry {
+            id
+            baskets
+            detergent
+            washType
+            order {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+          }
+          user {
+            id
+            username
+            loginDate
+            firstname
+            lastname
+            orders {
+              nextToken
+            }
+          }
+        }
+      }
+      user {
+        id
+        username
+        loginDate
+        firstname
+        lastname
+        orders {
+          items {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+          nextToken
+        }
+      }
+    }
+    nextToken
+  }
+}
+query GetLaundry($id: ID!) {
+  getLaundry(id: $id) {
+    id
+    baskets
+    detergent
+    washType
+    order {
+      id
+      pickupDate
+      dropoffDate
+      deliveryTime
+      totalCost
+      laundry {
+        id
+        baskets
+        detergent
+        washType
+        order {
+          id
+          pickupDate
+          dropoffDate
+          deliveryTime
+          totalCost
+          laundry {
+            id
+            baskets
+            detergent
+            washType
+            order {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+          }
+          user {
+            id
+            username
+            loginDate
+            firstname
+            lastname
+            orders {
+              nextToken
+            }
+          }
+        }
+      }
+      user {
+        id
+        username
+        loginDate
+        firstname
+        lastname
+        orders {
+          items {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+          nextToken
+        }
+      }
+    }
+  }
+}
+query ListLaundrys(
+  $filter: ModelLaundryFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listLaundrys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      baskets
+      detergent
+      washType
+      order {
+        id
+        pickupDate
+        dropoffDate
+        deliveryTime
+        totalCost
+        laundry {
+          id
+          baskets
+          detergent
+          washType
+          order {
+            id
+            pickupDate
+            dropoffDate
+            deliveryTime
+            totalCost
+            laundry {
+              id
+              baskets
+              detergent
+              washType
+            }
+            user {
+              id
+              username
+              loginDate
+              firstname
+              lastname
+            }
+          }
+        }
+        user {
+          id
+          username
+          loginDate
+          firstname
+          lastname
+          orders {
+            items {
+              id
+              pickupDate
+              dropoffDate
+              deliveryTime
+              totalCost
+            }
+            nextToken
+          }
+        }
+      }
+    }
+    nextToken
+  }
+}

@@ -1,0 +1,6 @@
+framework module Pods_kleeniOS {
+  umbrella header "Pods-kleeniOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

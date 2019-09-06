@@ -1,0 +1,14 @@
+{
+    "prod": {
+        "awscloudformation": {
+            "AuthRoleName": "kleenios-20190402095918-authRole",
+            "UnauthRoleArn": "arn:aws:iam::066679344572:role/kleenios-20190402095918-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::066679344572:role/kleenios-20190402095918-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "kleenios-20190402095918-deployment",
+            "UnauthRoleName": "kleenios-20190402095918-unauthRole",
+            "StackName": "kleenios-20190402095918",
+            "StackId": "arn:aws:cloudformation:us-east-1:066679344572:stack/kleenios-20190402095918/825b4e30-554f-11e9-9186-127b0ce5d1d0"
+        }
+    }
+}

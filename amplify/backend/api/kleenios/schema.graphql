@@ -1,0 +1,26 @@
+type User @model {
+  id: ID!
+  username: String
+  loginDate: String
+  firstname: String
+  lastname: String
+  orders: [Order] @connection(name: "UserOrder")
+}
+
+type Order @model {
+  id: ID!
+  pickupDate: String
+  dropoffDate: String
+  deliveryTime: String
+  totalCost: Float 
+  laundry: Laundry @connection(name: "OrderLaundry")
+  user: User @connection(name: "UserOrder")
+}
+
+type Laundry @model {
+  id: ID!
+  baskets: Int
+  detergent: String
+  washType: String
+  order: Order @connection(name: "OrderLaundry")
+}
