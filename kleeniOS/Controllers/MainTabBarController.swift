@@ -24,6 +24,7 @@ class MainTabBarController: UITabBarController, UINavigationBarDelegate, UITabBa
     var orderHistoryVC : OrdersViewController?
     var userProfileVC : UserProfileViewController?
     var orderSelectionVC : OrderSelectionViewController?
+    var chatBotVC : ChatBotController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +47,9 @@ class MainTabBarController: UITabBarController, UINavigationBarDelegate, UITabBa
         
         setupOrdersSelectionVC()
         setupOrderHistoryVC()
+        setupChatBotVC()
         setupProfileVC()
+        
     
         viewControllers = controllers
     }
@@ -69,7 +72,7 @@ class MainTabBarController: UITabBarController, UINavigationBarDelegate, UITabBa
             
         }
         
-        if tabBarController.selectedIndex == 2 {
+        if tabBarController.selectedIndex == 3 {
             
             pegasusAPI.retrieveUserDetails(username: self.user!.username!) { (user) in
                 self.userProfileVC?.updateUserDetails(user: user)
@@ -77,6 +80,20 @@ class MainTabBarController: UITabBarController, UINavigationBarDelegate, UITabBa
         }
         print("Tab bar Item Selected")
     
+    }
+    
+    func setupChatBotVC() {
+        chatBotVC = ChatBotController()
+        let chatBotNavController = UINavigationController(rootViewController: chatBotVC!)
+        
+        chatBotVC?.navigationItem.title = "Kleen Chatter"
+        
+        chatBotNavController.tabBarItem.title = "Chat"
+        chatBotNavController.tabBarItem.image = #imageLiteral(resourceName: "chat_icon")
+        chatBotVC?.navigationItem.rightBarButtonItem?.tintColor = .purple
+        
+        controllers.append(chatBotNavController)
+        
     }
     
     

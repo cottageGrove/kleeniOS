@@ -66,6 +66,8 @@ class UserProfileViewController: UIViewController {
     
     func updateUserDetails(user: User) {
         
+        
+        
         self.username.text = user.username
         self.firstname.text = user.firstName
         self.lastname.text = user.lastName
